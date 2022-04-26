@@ -1,0 +1,27 @@
+_The source code of this bot you can find in https://github\.com/go\-telegram/ui repo_
+
+*Available commands:*
+
+📅 *Datepicker*
+/datepicker\_simple
+Datepicker with default settings
+
+/datepicker\_custom
+Datepicker with custom localization\. Week starts on Sunday\. From 2019 dec 15 to 2020 jan 25
+Skipped days: jan 10, jan 13, dec 27\-29
+
+
+🕒 *Timepicker*
+_todo_
+
+🆎 *Inline Keyboard*
+/inline\_keyboard
+Simple multiline keyboard
+
+🔢 *Paginator*
+/paginator
+Paginator with 40 strings\. Per page 3 items\. With 'close' button\.
+
+🏞 *Slider*
+/slider
+Slider with 9 images with caption\. Optional select and cancel buttons\.
