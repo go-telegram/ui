@@ -14,10 +14,10 @@ func (datePicker *DatePicker) buildYearKeyboard(currentYear int) [][]models.Inli
 
 	var topRow []models.InlineKeyboardButton
 
-	if !datePicker.from.IsZero() && datePicker.from.Year() < currentYear-12 {
+	if datePicker.from.IsZero() || datePicker.from.Year() < currentYear-12 {
 		topRow = append(topRow, models.InlineKeyboardButton{Text: "\u2190 " + datePicker.lang("Prev"), CallbackData: datePicker.encodeState(state{cmd: cmdPrevYears, param: currentYear - 25})})
 	}
-	if !datePicker.to.IsZero() && datePicker.to.Year() > currentYear+12 {
+	if datePicker.to.IsZero() || datePicker.to.Year() > currentYear+12 {
 		topRow = append(topRow, models.InlineKeyboardButton{Text: datePicker.lang("Next") + " \u2192", CallbackData: datePicker.encodeState(state{cmd: cmdNextYears, param: currentYear + 25})})
 	}
 
