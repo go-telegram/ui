@@ -62,7 +62,7 @@ func defaultOnError(err error) {
 }
 
 func (s *Slider) Show(ctx context.Context, b *bot.Bot, chatID string) (*models.Message, error) {
-	s.callbackHandlerID, _ = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, s.prefix, bot.MatchTypePrefix, s.callback)
+	s.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, s.prefix, bot.MatchTypePrefix, s.callback)
 
 	slide := s.slides[s.current]
 

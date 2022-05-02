@@ -42,7 +42,7 @@ func New(b *bot.Bot, opts ...Option) *Keyboard {
 		opt(kb)
 	}
 
-	kb.callbackHandlerID, _ = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, kb.prefix, bot.MatchTypePrefix, kb.callback)
+	kb.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, kb.prefix, bot.MatchTypePrefix, kb.callback)
 
 	return kb
 }

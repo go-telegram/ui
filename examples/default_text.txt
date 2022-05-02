@@ -1,4 +1,8 @@
-_The source code of this bot you can find in https://github\.com/go\-telegram/ui repo_
+_The source code of this bot you can find in https://github\.com/go\-telegram/ui repo\._
+
+_Based on telegram bot framework https://github\.com/go\-telegram/bot_
+
+[Telegram group](https://t\.me/gotelegrambotui)
 
 *Available commands:*
 
@@ -25,3 +29,10 @@ Paginator with 40 strings\. Per page 3 items\. With 'close' button\.
 🏞 *Slider*
 /slider
 Slider with 9 images with caption\. Optional select and cancel buttons\.
+
+💤 *Progress*
+/progress\_simple
+Simple progress bar
+
+/progress\_custom
+Progress bar with custom render func and cancel button

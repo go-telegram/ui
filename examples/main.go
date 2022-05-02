@@ -26,6 +26,8 @@ func main() {
 		bot.WithMessageTextHandler("/inline_keyboard", bot.MatchTypeExact, handlerInlineKeyboard),
 		bot.WithMessageTextHandler("/paginator", bot.MatchTypeExact, handlerPaginator),
 		bot.WithMessageTextHandler("/slider", bot.MatchTypeExact, handlerSlider),
+		bot.WithMessageTextHandler("/progress_simple", bot.MatchTypeExact, handlerProgressSimple),
+		bot.WithMessageTextHandler("/progress_custom", bot.MatchTypeExact, handlerProgressCustom),
 	}
 
 	b := bot.New(telegramBotToken, opts...)
@@ -41,8 +43,9 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		return
 	}
 	methods.SendMessage(ctx, b, &methods.SendMessageParams{
-		ChatID:    strconv.Itoa(update.Message.Chat.ID),
-		Text:      defaultMessage,
-		ParseMode: models.ParseModeMarkdown,
+		ChatID:                strconv.Itoa(update.Message.Chat.ID),
+		Text:                  defaultMessage,
+		ParseMode:             models.ParseModeMarkdown,
+		DisableWebPagePreview: true,
 	})
 }

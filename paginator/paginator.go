@@ -58,7 +58,7 @@ func defaultOnError(err error) {
 }
 
 func (p *Paginator) Show(ctx context.Context, b *bot.Bot, chatID string) (*models.Message, error) {
-	p.callbackHandlerID, _ = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, p.prefix, bot.MatchTypePrefix, p.callback)
+	p.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, p.prefix, bot.MatchTypePrefix, p.callback)
 
 	return methods.SendMessage(ctx, b, &methods.SendMessageParams{
 		ChatID:      chatID,

@@ -12,7 +12,7 @@ import (
 )
 
 func (s *Slider) callbackAnswer(ctx context.Context, b *bot.Bot, callbackQuery *models.CallbackQuery) {
-	ok, err := methods.SendAnswerCallbackQuery(ctx, b, &methods.AnswerCallbackQueryParams{
+	ok, err := methods.AnswerCallbackQuery(ctx, b, &methods.AnswerCallbackQueryParams{
 		CallbackQueryID: callbackQuery.ID,
 	})
 	if err != nil {
@@ -73,8 +73,7 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 	_, errEdit := methods.EditMessageMedia(ctx, b, &methods.EditMessageMediaParams{
 		ChatID:    strconv.Itoa(update.CallbackQuery.Message.Chat.ID),
 		MessageID: update.CallbackQuery.Message.ID,
-		Media: &methods.InputMediaPhoto{
-			Type:      "photo",
+		Media: &models.InputMediaPhoto{
 			Media:     s.slides[s.current].Photo,
 			Caption:   s.slides[s.current].Text,
 			ParseMode: models.ParseModeMarkdown,

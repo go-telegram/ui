@@ -67,7 +67,7 @@ func New(b *bot.Bot, onSelect OnSelectHandler, opts ...Option) *DatePicker {
 		opt(datePicker)
 	}
 
-	datePicker.callbackHandlerID, _ = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, datePicker.prefix, bot.MatchTypePrefix, datePicker.callback)
+	datePicker.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, datePicker.prefix, bot.MatchTypePrefix, datePicker.callback)
 
 	return datePicker
 }

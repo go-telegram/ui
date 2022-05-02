@@ -12,7 +12,7 @@ import (
 )
 
 func (kb *Keyboard) callbackAnswer(ctx context.Context, b *bot.Bot, callbackQuery *models.CallbackQuery) {
-	ok, err := methods.SendAnswerCallbackQuery(ctx, b, &methods.AnswerCallbackQueryParams{
+	ok, err := methods.AnswerCallbackQuery(ctx, b, &methods.AnswerCallbackQueryParams{
 		CallbackQueryID: callbackQuery.ID,
 	})
 	if err != nil {
