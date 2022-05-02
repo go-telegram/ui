@@ -70,16 +70,28 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 		return
 	}
 
-	_, errEdit := methods.EditMessageMedia(ctx, b, &methods.EditMessageMediaParams{
+	slide := s.slides[s.current]
+
+	editParams := &methods.EditMessageMediaParams{
 		ChatID:    strconv.Itoa(update.CallbackQuery.Message.Chat.ID),
 		MessageID: update.CallbackQuery.Message.ID,
 		Media: &models.InputMediaPhoto{
-			Media:     s.slides[s.current].Photo,
-			Caption:   s.slides[s.current].Text,
+			Media:     slide.Photo,
+			Caption:   slide.Text,
 			ParseMode: models.ParseModeMarkdown,
 		},
 		ReplyMarkup: s.buildKeyboard(),
-	})
+	}
+	if slide.IsUpload {
+		editParams.Media = &models.InputMediaPhoto{
+			Media:           "attach://image.png",
+			Caption:         slide.Text,
+			ParseMode:       models.ParseModeMarkdown,
+			MediaAttachment: strings.NewReader(slide.Photo),
+		}
+	}
+
+	_, errEdit := methods.EditMessageMedia(ctx, b, editParams)
 	if errEdit != nil {
 		s.onError(errEdit)
 	}

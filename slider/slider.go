@@ -2,11 +2,12 @@ package slider
 
 import (
 	"context"
-	"github.com/go-telegram/bot/methods"
-	"github.com/go-telegram/bot/models"
 	"log"
+	"strings"
 
 	"github.com/go-telegram/bot"
+	"github.com/go-telegram/bot/methods"
+	"github.com/go-telegram/bot/models"
 )
 
 type OnSelectFunc func(ctx context.Context, b *bot.Bot, message *models.Message, item int)
@@ -14,8 +15,9 @@ type OnCancelFunc func(ctx context.Context, b *bot.Bot, message *models.Message)
 type OnErrorFunc func(err error)
 
 type Slide struct {
-	Photo string
-	Text  string
+	Photo    string
+	IsUpload bool
+	Text     string
 }
 
 var (
@@ -66,11 +68,20 @@ func (s *Slider) Show(ctx context.Context, b *bot.Bot, chatID string) (*models.M
 
 	slide := s.slides[s.current]
 
-	return methods.SendPhoto(ctx, b, &methods.SendPhotoParams{
+	sendParams := &methods.SendPhotoParams{
 		ChatID:      chatID,
 		Photo:       &models.InputFileString{Data: slide.Photo},
 		Caption:     slide.Text,
 		ParseMode:   models.ParseModeMarkdown,
 		ReplyMarkup: s.buildKeyboard(),
-	})
+	}
+
+	if slide.IsUpload {
+		sendParams.Photo = &models.InputFileUpload{
+			Filename: "image.png",
+			Data:     strings.NewReader(slide.Photo),
+		}
+	}
+
+	return methods.SendPhoto(ctx, b, sendParams)
 }
