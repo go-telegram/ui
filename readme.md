@@ -55,7 +55,6 @@ Small helper for easy building of inline keyboard.
 
 [Documentation](paginator/readme.md)
 
-
 ## Slider
 
 ![slider.png](slider/slider.png)
@@ -63,3 +62,11 @@ Small helper for easy building of inline keyboard.
 - pass slides with images and text
 
 [Documentation](slider/readme.md)
+
+## Progress
+
+![progress.png](progress/progress.png)
+
+Progress bar for long tasks
+
+[Documentation](progress/readme.md)

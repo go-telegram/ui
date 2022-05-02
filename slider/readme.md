@@ -99,6 +99,16 @@ func sliderOnCancel(ctx context.Context, b *bot.Bot, message *models.Message) {
 }
 ```
 
+If you want to use an upload image instead preloaded image or image URL, you should to place file content to `slide.Photo` field and set `slide.IsUpload` field to `true`.
+
+```go
+slide := &slider.Slide{
+    Photo: "<file_content>",
+    Text: "My Image",
+    IsUpload: true,    
+}
+```
+
 ## Options
 
 See in [options.go](options.go) file 
