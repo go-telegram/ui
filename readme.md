@@ -2,6 +2,8 @@
 
 > The project is under development. API may be changed before v1.0.0 version.
 
+> [Telegram Group](https://t.me/gotelegrambotui)
+
 UI controls for telegram bot [go-telegram/bot](https://github.com/go-telegram/bot)
 
 - datepicker
