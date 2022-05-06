@@ -33,9 +33,9 @@ For example, you can handle CallbackQuery in the default handler and send a mess
 func defaultHandler(ctx context.Context, b *bot.Bot, update bot.Update)  {
 	if update.CallbackQuery != nil {
 		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID:    update.CallbackQuery.Message.Chat.ID,
-            Text:      "Bot was updated. Try to call calendar again",
-        })  
+			ChatID:    update.CallbackQuery.Message.Chat.ID, 
+			Text: "Bot was updated. Try to call calendar again",
+		})  
 	}
 }
 ```
