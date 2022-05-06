@@ -65,18 +65,18 @@ var (
 )
 
 func main() {
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
+	defer cancel()
+
 	telegramBotToken := os.Getenv("EXAMPLE_TELEGRAM_BOT_TOKEN")
 
 	opts := []bot.Option{
 		bot.WithDefaultHandler(defaultHandler),
 	}
 
-	b := bot.New(telegramBotToken, opts...)
+	b := bot.New(ctx, telegramBotToken, opts...)
 
-	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
-	defer cancel()
-
-	b.Start(ctx)
+	b.GetUpdates(ctx)
 }
 
 func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {

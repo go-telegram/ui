@@ -20,18 +20,18 @@ import (
 )
 
 func main() {
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
+	defer cancel()
+
 	telegramBotToken := os.Getenv("EXAMPLE_TELEGRAM_BOT_TOKEN")
 
 	opts := []bot.Option{
 		bot.WithDefaultHandler(defaultHandler),
 	}
 
-	b := bot.New(telegramBotToken, opts...)
+	b := bot.New(ctx, telegramBotToken, opts...)
 
-	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
-	defer cancel()
-
-	b.Start(ctx)
+	b.GetUpdates(ctx)
 }
 
 func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
@@ -52,7 +52,7 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		Button("Cancel", []byte("cancel"), onInlineKeyboardSelect)
 
 	methods.SendMessage(ctx, b, &methods.SendMessageParams{
-		ChatID:      strconv.Itoa(update.Message.Chat.ID),
+		ChatID:      update.Message.Chat.ID,
 		Text:        "Select the variant",
 		ReplyMarkup: kb,
 	})
@@ -60,7 +60,7 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 
 func onInlineKeyboardSelect(ctx context.Context, b *bot.Bot, mes *models.Message, data []byte) {
 	methods.SendMessage(ctx, b, &methods.SendMessageParams{
-		ChatID: strconv.Itoa(mes.Chat.ID),
+		ChatID: mes.Chat.ID,
 		Text:   "You selected: " + string(data),
 	})
 }
