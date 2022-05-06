@@ -10,6 +10,7 @@ UI controls for telegram bot [go-telegram/bot](https://github.com/go-telegram/bo
 - inline keyboard
 - paginator
 - slider
+- progress
 - timepicker (todo)
 
 Feel to free to contribute and issues!
@@ -40,13 +41,13 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update bot.Update)  {
 }
 ```
 
-### Demo bot
+### Live demo
 
 You can run demo bot from `examples` folder.
 
 Before start, you should set `EXAMPLE_TELEGRAM_BOT_TOKEN` environment variable to your bot token.
 
-Also, you can try [online version of this bot](https://t.me/gotelegramuidemobot) 
+Also, you can try [online version of this bot](https://t.me/gotelegramuidemobot) right now.
 
 ## DatePicker
 
