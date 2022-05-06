@@ -14,7 +14,6 @@ import (
 	"strconv"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 	"github.com/go-telegram/ui/paginator"
 )
@@ -65,7 +64,7 @@ var (
 )
 
 func main() {
-	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
 	telegramBotToken := os.Getenv("EXAMPLE_TELEGRAM_BOT_TOKEN")
@@ -74,9 +73,9 @@ func main() {
 		bot.WithDefaultHandler(defaultHandler),
 	}
 
-	b := bot.New(ctx, telegramBotToken, opts...)
+	b := bot.New(telegramBotToken, opts...)
 
-	b.GetUpdates(ctx)
+	b.Start(ctx)
 }
 
 func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {

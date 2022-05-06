@@ -11,16 +11,14 @@ import (
 	"context"
 	"os"
 	"os/signal"
-	"strconv"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 	"github.com/go-telegram/ui/keyboard/inline"
 )
 
 func main() {
-	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
 	telegramBotToken := os.Getenv("EXAMPLE_TELEGRAM_BOT_TOKEN")
@@ -29,9 +27,9 @@ func main() {
 		bot.WithDefaultHandler(defaultHandler),
 	}
 
-	b := bot.New(ctx, telegramBotToken, opts...)
+	b := bot.New(telegramBotToken, opts...)
 
-	b.GetUpdates(ctx)
+	b.Start(ctx)
 }
 
 func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
@@ -51,7 +49,7 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		Row().
 		Button("Cancel", []byte("cancel"), onInlineKeyboardSelect)
 
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
+	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID:      update.Message.Chat.ID,
 		Text:        "Select the variant",
 		ReplyMarkup: kb,
@@ -59,7 +57,7 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 }
 
 func onInlineKeyboardSelect(ctx context.Context, b *bot.Bot, mes *models.Message, data []byte) {
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
+	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID: mes.Chat.ID,
 		Text:   "You selected: " + string(data),
 	})

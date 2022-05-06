@@ -3,16 +3,14 @@ package slider
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 )
 
 func (s *Slider) callbackAnswer(ctx context.Context, b *bot.Bot, callbackQuery *models.CallbackQuery) {
-	ok, err := methods.AnswerCallbackQuery(ctx, b, &methods.AnswerCallbackQueryParams{
+	ok, err := b.AnswerCallbackQuery(ctx, &bot.AnswerCallbackQueryParams{
 		CallbackQueryID: callbackQuery.ID,
 	})
 	if err != nil {
@@ -42,8 +40,8 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 		if s.deleteOnSelect {
 			b.UnregisterHandler(s.callbackHandlerID)
 
-			_, errDelete := methods.DeleteMessage(ctx, b, &methods.DeleteMessageParams{
-				ChatID:    strconv.Itoa(update.CallbackQuery.Message.Chat.ID),
+			_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
+				ChatID:    update.CallbackQuery.Message.Chat.ID,
 				MessageID: update.CallbackQuery.Message.ID,
 			})
 			if errDelete != nil {
@@ -57,8 +55,8 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 		if s.deleteOnCancel {
 			b.UnregisterHandler(s.callbackHandlerID)
 
-			_, errDelete := methods.DeleteMessage(ctx, b, &methods.DeleteMessageParams{
-				ChatID:    strconv.Itoa(update.CallbackQuery.Message.Chat.ID),
+			_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
+				ChatID:    update.CallbackQuery.Message.Chat.ID,
 				MessageID: update.CallbackQuery.Message.ID,
 			})
 			if errDelete != nil {
@@ -72,8 +70,8 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 
 	slide := s.slides[s.current]
 
-	editParams := &methods.EditMessageMediaParams{
-		ChatID:    strconv.Itoa(update.CallbackQuery.Message.Chat.ID),
+	editParams := &bot.EditMessageMediaParams{
+		ChatID:    update.CallbackQuery.Message.Chat.ID,
 		MessageID: update.CallbackQuery.Message.ID,
 		Media: &models.InputMediaPhoto{
 			Media:     slide.Photo,
@@ -91,7 +89,7 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 		}
 	}
 
-	_, errEdit := methods.EditMessageMedia(ctx, b, editParams)
+	_, errEdit := b.EditMessageMedia(ctx, editParams)
 	if errEdit != nil {
 		s.onError(errEdit)
 	}

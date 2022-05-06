@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 	"github.com/go-telegram/ui/progress"
 )
@@ -17,7 +16,7 @@ func handlerProgressCustom(ctx context.Context, b *bot.Bot, update *models.Updat
 
 	progressCancelFunc := func(ctx context.Context, b *bot.Bot, mes *models.Message) {
 		cancel()
-		methods.SendMessage(ctx, b, &methods.SendMessageParams{
+		b.SendMessage(ctx, &bot.SendMessageParams{
 			ChatID: mes.Chat.ID,
 			Text:   "Progress cancelled",
 		})
@@ -50,7 +49,7 @@ func doSomeLongTaskCustom(cancelCtx, ctx context.Context, b *bot.Bot, p *progres
 		time.Sleep(time.Second)
 		if v == 100 {
 			p.Delete(ctx, b)
-			methods.SendMessage(ctx, b, &methods.SendMessageParams{
+			b.SendMessage(ctx, &bot.SendMessageParams{
 				ChatID: chatID,
 				Text:   "Completed",
 			})

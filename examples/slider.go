@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 	"github.com/go-telegram/ui/slider"
 )
@@ -45,15 +44,15 @@ func handlerSlider(ctx context.Context, b *bot.Bot, update *models.Update) {
 }
 
 func sliderOnSelect(ctx context.Context, b *bot.Bot, message *models.Message, item int) {
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
-		ChatID: strconv.Itoa(message.Chat.ID),
+	b.SendMessage(ctx, &bot.SendMessageParams{
+		ChatID: message.Chat.ID,
 		Text:   "Select " + strconv.Itoa(item),
 	})
 }
 
 func sliderOnCancel(ctx context.Context, b *bot.Bot, message *models.Message) {
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
-		ChatID: strconv.Itoa(message.Chat.ID),
+	b.SendMessage(ctx, &bot.SendMessageParams{
+		ChatID: message.Chat.ID,
 		Text:   "Cancel",
 	})
 }

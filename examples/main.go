@@ -8,7 +8,6 @@ import (
 	"strconv"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 )
 
@@ -33,16 +32,16 @@ func main() {
 		bot.WithMessageTextHandler("/progress_custom", bot.MatchTypeExact, handlerProgressCustom),
 	}
 
-	b := bot.New(ctx, telegramBotToken, opts...)
+	b := bot.New(telegramBotToken, opts...)
 
-	b.GetUpdates(ctx)
+	b.Start(ctx)
 }
 
 func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 	if update.Message == nil {
 		return
 	}
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
+	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID:                strconv.Itoa(update.Message.Chat.ID),
 		Text:                  defaultMessage,
 		ParseMode:             models.ParseModeMarkdown,

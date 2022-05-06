@@ -7,12 +7,11 @@ import (
 	"strings"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 )
 
 func (kb *Keyboard) callbackAnswer(ctx context.Context, b *bot.Bot, callbackQuery *models.CallbackQuery) {
-	ok, err := methods.AnswerCallbackQuery(ctx, b, &methods.AnswerCallbackQueryParams{
+	ok, err := b.AnswerCallbackQuery(ctx, &bot.AnswerCallbackQueryParams{
 		CallbackQueryID: callbackQuery.ID,
 	})
 	if err != nil {
@@ -28,8 +27,8 @@ func (kb *Keyboard) callback(ctx context.Context, b *bot.Bot, update *models.Upd
 	if kb.deleteAfterClick {
 		b.UnregisterHandler(kb.callbackHandlerID)
 
-		_, errDelete := methods.DeleteMessage(ctx, b, &methods.DeleteMessageParams{
-			ChatID:    strconv.Itoa(update.CallbackQuery.Message.Chat.ID),
+		_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
+			ChatID:    update.CallbackQuery.Message.Chat.ID,
 			MessageID: update.CallbackQuery.Message.ID,
 		})
 		if errDelete != nil {

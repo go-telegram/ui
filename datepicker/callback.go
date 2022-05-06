@@ -3,11 +3,9 @@ package datepicker
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 )
 
@@ -28,7 +26,7 @@ const (
 )
 
 func (datePicker *DatePicker) callbackAnswer(ctx context.Context, b *bot.Bot, callbackQuery *models.CallbackQuery) {
-	ok, err := methods.AnswerCallbackQuery(ctx, b, &methods.AnswerCallbackQueryParams{
+	ok, err := b.AnswerCallbackQuery(ctx, &bot.AnswerCallbackQueryParams{
 		CallbackQueryID: callbackQuery.ID,
 	})
 	if err != nil {
@@ -52,8 +50,8 @@ func (datePicker *DatePicker) callback(ctx context.Context, b *bot.Bot, update *
 		datePicker.showMain(ctx, b, update.CallbackQuery.Message)
 	case cmdDayClick:
 		if datePicker.deleteOnSelect {
-			_, errDelete := methods.DeleteMessage(ctx, b, &methods.DeleteMessageParams{
-				ChatID:    strconv.Itoa(update.CallbackQuery.Message.Chat.ID),
+			_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
+				ChatID:    update.CallbackQuery.Message.Chat.ID,
 				MessageID: update.CallbackQuery.Message.ID,
 			})
 			if errDelete != nil {
@@ -64,8 +62,8 @@ func (datePicker *DatePicker) callback(ctx context.Context, b *bot.Bot, update *
 		datePicker.onSelect(ctx, b, update.CallbackQuery.Message, time.Date(datePicker.year, datePicker.month, st.param, 0, 0, 0, 0, time.Local))
 	case cmdCancel:
 		if datePicker.deleteOnCancel {
-			_, errDelete := methods.DeleteMessage(ctx, b, &methods.DeleteMessageParams{
-				ChatID:    strconv.Itoa(update.CallbackQuery.Message.Chat.ID),
+			_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
+				ChatID:    update.CallbackQuery.Message.Chat.ID,
 				MessageID: update.CallbackQuery.Message.ID,
 			})
 			if errDelete != nil {
@@ -108,8 +106,8 @@ func (datePicker *DatePicker) callback(ctx context.Context, b *bot.Bot, update *
 }
 
 func (datePicker *DatePicker) showSelectMonth(ctx context.Context, b *bot.Bot, mes *models.Message) {
-	_, err := methods.EditMessageReplyMarkup(ctx, b, &methods.EditMessageReplyMarkupParams{
-		ChatID:      strconv.Itoa(mes.Chat.ID),
+	_, err := b.EditMessageReplyMarkup(ctx, &bot.EditMessageReplyMarkupParams{
+		ChatID:      mes.Chat.ID,
 		MessageID:   mes.ID,
 		ReplyMarkup: models.InlineKeyboardMarkup{InlineKeyboard: datePicker.buildMonthKeyboard()},
 	})
@@ -119,8 +117,8 @@ func (datePicker *DatePicker) showSelectMonth(ctx context.Context, b *bot.Bot, m
 }
 
 func (datePicker *DatePicker) showSelectYear(ctx context.Context, b *bot.Bot, mes *models.Message, currentYear int) {
-	_, err := methods.EditMessageReplyMarkup(ctx, b, &methods.EditMessageReplyMarkupParams{
-		ChatID:      strconv.Itoa(mes.Chat.ID),
+	_, err := b.EditMessageReplyMarkup(ctx, &bot.EditMessageReplyMarkupParams{
+		ChatID:      mes.Chat.ID,
 		MessageID:   mes.ID,
 		ReplyMarkup: models.InlineKeyboardMarkup{InlineKeyboard: datePicker.buildYearKeyboard(currentYear)},
 	})
@@ -130,8 +128,8 @@ func (datePicker *DatePicker) showSelectYear(ctx context.Context, b *bot.Bot, me
 }
 
 func (datePicker *DatePicker) showMain(ctx context.Context, b *bot.Bot, mes *models.Message) {
-	_, err := methods.EditMessageReplyMarkup(ctx, b, &methods.EditMessageReplyMarkupParams{
-		ChatID:      strconv.Itoa(mes.Chat.ID),
+	_, err := b.EditMessageReplyMarkup(ctx, &bot.EditMessageReplyMarkupParams{
+		ChatID:      mes.Chat.ID,
 		MessageID:   mes.ID,
 		ReplyMarkup: models.InlineKeyboardMarkup{InlineKeyboard: datePicker.buildKeyboard()},
 	})

@@ -11,17 +11,15 @@ import (
 	"context"
 	"os"
 	"os/signal"
-	"strconv"
 	"time"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 	"github.com/go-telegram/ui/datepicker"
 )
 
 func main() {
-	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
 	telegramBotToken := os.Getenv("EXAMPLE_TELEGRAM_BOT_TOKEN")
@@ -30,15 +28,15 @@ func main() {
 		bot.WithDefaultHandler(defaultHandler),
 	}
 
-	b := bot.New(ctx, telegramBotToken, opts...)
+	b := bot.New(telegramBotToken, opts...)
 
-	b.GetUpdates(ctx)
+	b.Start(ctx)
 }
 
 func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 	kb := datepicker.New(b, onDatepickerSimpleSelect)
 
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
+	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID:      update.Message.Chat.ID,
 		Text:        "Select any date",
 		ReplyMarkup: kb,
@@ -46,7 +44,7 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 }
 
 func onDatepickerSimpleSelect(ctx context.Context, b *bot.Bot, mes *models.Message, date time.Time) {
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
+	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID: mes.Chat.ID,
 		Text:   "You select " + date.Format("2006-01-02"),
 	})

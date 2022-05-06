@@ -6,7 +6,6 @@ import (
 	"log"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 )
 
@@ -44,7 +43,7 @@ func New(opts ...Option) *Progress {
 }
 
 func (p *Progress) Show(ctx context.Context, b *bot.Bot, chatID int) error {
-	sendParams := &methods.SendMessageParams{
+	sendParams := &bot.SendMessageParams{
 		ChatID:    chatID,
 		Text:      p.renderTextFunc(p.value),
 		ParseMode: models.ParseModeMarkdown,
@@ -54,7 +53,7 @@ func (p *Progress) Show(ctx context.Context, b *bot.Bot, chatID int) error {
 		sendParams.ReplyMarkup = p.buildKeyboard()
 	}
 
-	m, err := methods.SendMessage(ctx, b, sendParams)
+	m, err := b.SendMessage(ctx, sendParams)
 
 	if err != nil {
 		return err
@@ -70,7 +69,7 @@ func (p *Progress) Show(ctx context.Context, b *bot.Bot, chatID int) error {
 }
 
 func (p *Progress) Delete(ctx context.Context, b *bot.Bot) {
-	_, err := methods.DeleteMessage(ctx, b, &methods.DeleteMessageParams{
+	_, err := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
 		ChatID:    p.message.Chat.ID,
 		MessageID: p.message.ID,
 	})
@@ -100,7 +99,7 @@ func (p *Progress) buildKeyboard() *models.InlineKeyboardMarkup {
 func (p *Progress) onCancelCall(ctx context.Context, b *bot.Bot, update *models.Update) {
 	p.canceled = true
 	if p.deleteOnCancel {
-		_, err := methods.DeleteMessage(ctx, b, &methods.DeleteMessageParams{
+		_, err := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
 			ChatID:    update.CallbackQuery.Message.Chat.ID,
 			MessageID: update.CallbackQuery.Message.ID,
 		})

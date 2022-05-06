@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 )
 
@@ -60,7 +59,7 @@ func defaultOnError(err error) {
 func (p *Paginator) Show(ctx context.Context, b *bot.Bot, chatID string) (*models.Message, error) {
 	p.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, p.prefix, bot.MatchTypePrefix, p.callback)
 
-	return methods.SendMessage(ctx, b, &methods.SendMessageParams{
+	return b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID:      chatID,
 		Text:        p.buildText(),
 		ParseMode:   models.ParseModeMarkdown,

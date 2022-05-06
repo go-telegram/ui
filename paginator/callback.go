@@ -7,12 +7,11 @@ import (
 	"strings"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 )
 
 func (p *Paginator) callbackAnswer(ctx context.Context, b *bot.Bot, callbackQuery *models.CallbackQuery) {
-	ok, err := methods.AnswerCallbackQuery(ctx, b, &methods.AnswerCallbackQueryParams{
+	ok, err := b.AnswerCallbackQuery(ctx, &bot.AnswerCallbackQueryParams{
 		CallbackQueryID: callbackQuery.ID,
 	})
 	if err != nil {
@@ -46,8 +45,8 @@ func (p *Paginator) callback(ctx context.Context, b *bot.Bot, update *models.Upd
 	case cmdClose:
 		b.UnregisterHandler(p.callbackHandlerID)
 
-		_, errDelete := methods.DeleteMessage(ctx, b, &methods.DeleteMessageParams{
-			ChatID:    strconv.Itoa(update.CallbackQuery.Message.Chat.ID),
+		_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
+			ChatID:    update.CallbackQuery.Message.Chat.ID,
 			MessageID: update.CallbackQuery.Message.ID,
 		})
 		if errDelete != nil {
@@ -60,8 +59,8 @@ func (p *Paginator) callback(ctx context.Context, b *bot.Bot, update *models.Upd
 		p.currentPage = page
 	}
 
-	_, errEdit := methods.EditMessageText(ctx, b, &methods.EditMessageTextParams{
-		ChatID:          strconv.Itoa(update.CallbackQuery.Message.Chat.ID),
+	_, errEdit := b.EditMessageText(ctx, &bot.EditMessageTextParams{
+		ChatID:          update.CallbackQuery.Message.Chat.ID,
 		MessageID:       update.CallbackQuery.Message.ID,
 		InlineMessageID: update.CallbackQuery.InlineMessageID,
 		Text:            p.buildText(),

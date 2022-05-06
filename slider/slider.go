@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 )
 
@@ -68,7 +67,7 @@ func (s *Slider) Show(ctx context.Context, b *bot.Bot, chatID string) (*models.M
 
 	slide := s.slides[s.current]
 
-	sendParams := &methods.SendPhotoParams{
+	sendParams := &bot.SendPhotoParams{
 		ChatID:      chatID,
 		Photo:       &models.InputFileString{Data: slide.Photo},
 		Caption:     slide.Text,
@@ -83,5 +82,5 @@ func (s *Slider) Show(ctx context.Context, b *bot.Bot, chatID string) (*models.M
 		}
 	}
 
-	return methods.SendPhoto(ctx, b, sendParams)
+	return b.SendPhoto(ctx, sendParams)
 }

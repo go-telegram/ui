@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 	"github.com/go-telegram/ui/progress"
 )
@@ -25,7 +24,7 @@ func doSomeLongTaskSimple(ctx context.Context, b *bot.Bot, p *progress.Progress,
 		time.Sleep(time.Second)
 		if v == 100 {
 			p.Delete(ctx, b)
-			methods.SendMessage(ctx, b, &methods.SendMessageParams{
+			b.SendMessage(ctx, &bot.SendMessageParams{
 				ChatID: chatID,
 				Text:   "Completed",
 			})

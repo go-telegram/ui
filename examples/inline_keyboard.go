@@ -2,10 +2,8 @@ package main
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 	"github.com/go-telegram/ui/keyboard/inline"
 )
@@ -27,16 +25,16 @@ func handlerInlineKeyboard(ctx context.Context, b *bot.Bot, update *models.Updat
 		Row().
 		Button("Cancel", []byte("cancel"), onInlineKeyboardSelect)
 
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
-		ChatID:      strconv.Itoa(update.Message.Chat.ID),
+	b.SendMessage(ctx, &bot.SendMessageParams{
+		ChatID:      update.Message.Chat.ID,
 		Text:        "Select the variant",
 		ReplyMarkup: kb,
 	})
 }
 
 func onInlineKeyboardSelect(ctx context.Context, b *bot.Bot, mes *models.Message, data []byte) {
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
-		ChatID: strconv.Itoa(mes.Chat.ID),
+	b.SendMessage(ctx, &bot.SendMessageParams{
+		ChatID: mes.Chat.ID,
 		Text:   "You selected: " + string(data),
 	})
 }

@@ -14,13 +14,12 @@ import (
 	"strconv"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 	"github.com/go-telegram/ui/slider"
 )
 
 func main() {
-	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
 	telegramBotToken := os.Getenv("EXAMPLE_TELEGRAM_BOT_TOKEN")
@@ -29,9 +28,9 @@ func main() {
 		bot.WithDefaultHandler(defaultHandler),
 	}
 
-	b := bot.New(ctx, telegramBotToken, opts...)
+	b := bot.New(telegramBotToken, opts...)
 
-	b.GetUpdates(ctx)
+	b.Start(ctx)
 }
 
 func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
@@ -85,14 +84,14 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 }
 
 func sliderOnSelect(ctx context.Context, b *bot.Bot, message *models.Message, item int) {
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
+	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID: message.Chat.ID,
 		Text:   "Select " + strconv.Itoa(item),
 	})
 }
 
 func sliderOnCancel(ctx context.Context, b *bot.Bot, message *models.Message) {
-	methods.SendMessage(ctx, b, &methods.SendMessageParams{
+	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID: message.Chat.ID,
 		Text:   "Cancel",
 	})

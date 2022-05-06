@@ -30,7 +30,6 @@ import (
 	"os/signal"
 
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/methods"
 	"github.com/go-telegram/bot/models"
 	"github.com/go-telegram/ui/progress"
 )
@@ -45,9 +44,9 @@ func main() {
 		bot.WithDefaultHandler(defaultHandler),
 	}
 
-	b := bot.New(ctx, telegramBotToken, opts...)
+	b := bot.New(telegramBotToken, opts...)
 
-	b.GetUpdates(ctx)
+	b.Start(ctx)
 }
 
 func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
@@ -64,7 +63,7 @@ func doSomeLongTaskSimple(ctx context.Context, b *bot.Bot, p *progress.Progress,
 		time.Sleep(time.Second)
 		if v == 100 {
 			p.Delete(ctx, b)
-			methods.SendMessage(ctx, b, &methods.SendMessageParams{
+			b.SendMessage(ctx, &bot.SendMessageParams{
 				ChatID: chatID,
 				Text:   "Completed",
 			})
