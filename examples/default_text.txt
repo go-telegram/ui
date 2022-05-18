@@ -36,3 +36,10 @@ Simple progress bar
 
 /progress\_custom
 Progress bar with custom render func and cancel button
+
+📑 *Dialog*
+/dialog
+Simple dialog
+
+/dialog\_inline
+Simple dialog in inline mode

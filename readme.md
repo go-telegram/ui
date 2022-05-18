@@ -11,6 +11,7 @@ UI controls for telegram bot [go-telegram/bot](https://github.com/go-telegram/bo
 - paginator
 - slider
 - progress
+- dialog
 - timepicker (todo)
 
 Feel to free to contribute and issues!
@@ -92,3 +93,11 @@ Small helper for easy building of inline keyboard.
 Progress bar for long tasks
 
 [Documentation](progress/readme.md)
+
+## Dialog
+
+![dialog.gif](dialog/dialog.gif)
+
+Simple dialogs
+
+[Documentation](dialog/readme.md)

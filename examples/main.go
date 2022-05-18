@@ -30,6 +30,8 @@ func main() {
 		bot.WithMessageTextHandler("/slider", bot.MatchTypeExact, handlerSlider),
 		bot.WithMessageTextHandler("/progress_simple", bot.MatchTypeExact, handlerProgressSimple),
 		bot.WithMessageTextHandler("/progress_custom", bot.MatchTypeExact, handlerProgressCustom),
+		bot.WithMessageTextHandler("/dialog", bot.MatchTypeExact, handlerDialog),
+		bot.WithMessageTextHandler("/dialog_inline", bot.MatchTypeExact, handlerDialogInline),
 	}
 
 	b := bot.New(telegramBotToken, opts...)
