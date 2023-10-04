@@ -1,7 +1,5 @@
 module github.com/go-telegram/ui
 
-go 1.18
+go 1.20
 
-//replace github.com/go-telegram/bot => ../bot
-
-require github.com/go-telegram/bot v0.2.0
+require github.com/go-telegram/bot v0.8.0

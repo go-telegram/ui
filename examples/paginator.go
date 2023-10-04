@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -62,5 +61,5 @@ func handlerPaginator(ctx context.Context, b *bot.Bot, update *models.Update) {
 
 	p := paginator.New(data, opts...)
 
-	p.Show(ctx, b, strconv.Itoa(update.Message.Chat.ID))
+	p.Show(ctx, b, update.Message.Chat.ID)
 }

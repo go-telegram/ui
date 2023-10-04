@@ -40,7 +40,7 @@ func defaultOnError(err error) {
 	log.Printf("[TG-UI-DIALOG] [ERROR] %s", err)
 }
 
-func (d *Dialog) showNode(ctx context.Context, b *bot.Bot, chatID string, node Node) (*models.Message, error) {
+func (d *Dialog) showNode(ctx context.Context, b *bot.Bot, chatID any, node Node) (*models.Message, error) {
 	params := &bot.SendMessageParams{
 		ChatID:      chatID,
 		Text:        node.Text,
@@ -51,7 +51,7 @@ func (d *Dialog) showNode(ctx context.Context, b *bot.Bot, chatID string, node N
 	return b.SendMessage(ctx, params)
 }
 
-func (d *Dialog) Show(ctx context.Context, b *bot.Bot, chatID string, nodeID string) (*models.Message, error) {
+func (d *Dialog) Show(ctx context.Context, b *bot.Bot, chatID any, nodeID string) (*models.Message, error) {
 	d.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, d.prefix, bot.MatchTypePrefix, d.callback)
 
 	node, ok := d.findNode(nodeID)

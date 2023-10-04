@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -21,11 +20,11 @@ var (
 func handlerDialog(ctx context.Context, b *bot.Bot, update *models.Update) {
 	p := dialog.New(dialogNodes)
 
-	p.Show(ctx, b, strconv.Itoa(update.Message.Chat.ID), "start")
+	p.Show(ctx, b, update.Message.Chat.ID, "start")
 }
 
 func handlerDialogInline(ctx context.Context, b *bot.Bot, update *models.Update) {
 	p := dialog.New(dialogNodes, dialog.Inline())
 
-	p.Show(ctx, b, strconv.Itoa(update.Message.Chat.ID), "start")
+	p.Show(ctx, b, update.Message.Chat.ID, "start")
 }

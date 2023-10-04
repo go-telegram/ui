@@ -5,7 +5,6 @@ import (
 	_ "embed"
 	"os"
 	"os/signal"
-	"strconv"
 
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -34,7 +33,10 @@ func main() {
 		bot.WithMessageTextHandler("/dialog_inline", bot.MatchTypeExact, handlerDialogInline),
 	}
 
-	b := bot.New(telegramBotToken, opts...)
+	b, err := bot.New(telegramBotToken, opts...)
+	if err != nil {
+		panic(err)
+	}
 
 	b.Start(ctx)
 }
@@ -44,7 +46,7 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		return
 	}
 	b.SendMessage(ctx, &bot.SendMessageParams{
-		ChatID:                strconv.Itoa(update.Message.Chat.ID),
+		ChatID:                update.Message.Chat.ID,
 		Text:                  defaultMessage,
 		ParseMode:             models.ParseModeMarkdown,
 		DisableWebPagePreview: true,

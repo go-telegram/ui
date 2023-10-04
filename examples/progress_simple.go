@@ -18,7 +18,7 @@ func handlerProgressSimple(ctx context.Context, b *bot.Bot, update *models.Updat
 	go doSomeLongTaskSimple(ctx, b, p, update.Message.Chat.ID)
 }
 
-func doSomeLongTaskSimple(ctx context.Context, b *bot.Bot, p *progress.Progress, chatID int) {
+func doSomeLongTaskSimple(ctx context.Context, b *bot.Bot, p *progress.Progress, chatID any) {
 	v := 0.0
 	for {
 		time.Sleep(time.Second)

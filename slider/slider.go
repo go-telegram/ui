@@ -62,7 +62,7 @@ func defaultOnError(err error) {
 	log.Printf("[TG-UI-SLIDER] [ERROR] %s", err)
 }
 
-func (s *Slider) Show(ctx context.Context, b *bot.Bot, chatID string) (*models.Message, error) {
+func (s *Slider) Show(ctx context.Context, b *bot.Bot, chatID any) (*models.Message, error) {
 	s.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, s.prefix, bot.MatchTypePrefix, s.callback)
 
 	slide := s.slides[s.current]

@@ -38,7 +38,7 @@ func handlerProgressCustom(ctx context.Context, b *bot.Bot, update *models.Updat
 	go doSomeLongTaskCustom(cancelCtx, ctx, b, p, update.Message.Chat.ID)
 }
 
-func doSomeLongTaskCustom(cancelCtx, ctx context.Context, b *bot.Bot, p *progress.Progress, chatID int) {
+func doSomeLongTaskCustom(cancelCtx, ctx context.Context, b *bot.Bot, p *progress.Progress, chatID any) {
 	v := 0.0
 	for {
 		select {

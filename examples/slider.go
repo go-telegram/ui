@@ -40,7 +40,7 @@ func handlerSlider(ctx context.Context, b *bot.Bot, update *models.Update) {
 
 	sl := slider.New(slides, opts...)
 
-	sl.Show(ctx, b, strconv.Itoa(update.Message.Chat.ID))
+	sl.Show(ctx, b, update.Message.Chat.ID)
 }
 
 func sliderOnSelect(ctx context.Context, b *bot.Bot, message *models.Message, item int) {

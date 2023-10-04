@@ -42,7 +42,7 @@ func New(opts ...Option) *Progress {
 	return p
 }
 
-func (p *Progress) Show(ctx context.Context, b *bot.Bot, chatID int) error {
+func (p *Progress) Show(ctx context.Context, b *bot.Bot, chatID any) error {
 	sendParams := &bot.SendMessageParams{
 		ChatID:    chatID,
 		Text:      p.renderTextFunc(p.value),
