@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.0 (2024-01-19)
+
+- fixes for bot lib version `v1.0.1` and bot API `v7.0`
+
 ## v0.1.2 (2023-10-04)
 
 - updated lib version to v0.8.0
