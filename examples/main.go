@@ -46,9 +46,11 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		return
 	}
 	b.SendMessage(ctx, &bot.SendMessageParams{
-		ChatID:                update.Message.Chat.ID,
-		Text:                  defaultMessage,
-		ParseMode:             models.ParseModeMarkdown,
-		DisableWebPagePreview: true,
+		ChatID:    update.Message.Chat.ID,
+		Text:      defaultMessage,
+		ParseMode: models.ParseModeMarkdown,
+		LinkPreviewOptions: &models.LinkPreviewOptions{
+			IsDisabled: bot.True(),
+		},
 	})
 }

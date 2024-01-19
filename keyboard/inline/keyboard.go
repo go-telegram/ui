@@ -9,7 +9,7 @@ import (
 	"github.com/go-telegram/bot/models"
 )
 
-type OnSelect func(ctx context.Context, bot *bot.Bot, mes *models.Message, data []byte)
+type OnSelect func(ctx context.Context, bot *bot.Bot, mes models.InaccessibleMessage, data []byte)
 type OnErrorHandler func(err error)
 
 type handlerData struct {

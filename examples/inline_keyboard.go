@@ -32,7 +32,7 @@ func handlerInlineKeyboard(ctx context.Context, b *bot.Bot, update *models.Updat
 	})
 }
 
-func onInlineKeyboardSelect(ctx context.Context, b *bot.Bot, mes *models.Message, data []byte) {
+func onInlineKeyboardSelect(ctx context.Context, b *bot.Bot, mes models.InaccessibleMessage, data []byte) {
 	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID: mes.Chat.ID,
 		Text:   "You selected: " + string(data),

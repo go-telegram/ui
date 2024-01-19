@@ -42,7 +42,7 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 
 			_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
 				ChatID:    update.CallbackQuery.Message.Chat.ID,
-				MessageID: update.CallbackQuery.Message.ID,
+				MessageID: update.CallbackQuery.Message.MessageID,
 			})
 			if errDelete != nil {
 				s.onError(errDelete)
@@ -57,7 +57,7 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 
 			_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
 				ChatID:    update.CallbackQuery.Message.Chat.ID,
-				MessageID: update.CallbackQuery.Message.ID,
+				MessageID: update.CallbackQuery.Message.MessageID,
 			})
 			if errDelete != nil {
 				s.onError(errDelete)
@@ -72,7 +72,7 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 
 	editParams := &bot.EditMessageMediaParams{
 		ChatID:    update.CallbackQuery.Message.Chat.ID,
-		MessageID: update.CallbackQuery.Message.ID,
+		MessageID: update.CallbackQuery.Message.MessageID,
 		Media: &models.InputMediaPhoto{
 			Media:     slide.Photo,
 			Caption:   slide.Text,

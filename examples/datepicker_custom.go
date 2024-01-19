@@ -41,14 +41,14 @@ func handlerDatepickerCustom(ctx context.Context, b *bot.Bot, update *models.Upd
 	})
 }
 
-func onDatepickerCustomCancel(ctx context.Context, b *bot.Bot, mes *models.Message) {
+func onDatepickerCustomCancel(ctx context.Context, b *bot.Bot, mes models.InaccessibleMessage) {
 	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID: mes.Chat.ID,
 		Text:   "Canceled",
 	})
 }
 
-func onDatepickerCustomSelect(ctx context.Context, b *bot.Bot, mes *models.Message, date time.Time) {
+func onDatepickerCustomSelect(ctx context.Context, b *bot.Bot, mes models.InaccessibleMessage, date time.Time) {
 	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID: mes.Chat.ID,
 		Text:   "You select " + date.Format("2006-01-02"),

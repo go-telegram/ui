@@ -52,7 +52,7 @@ func (datePicker *DatePicker) callback(ctx context.Context, b *bot.Bot, update *
 		if datePicker.deleteOnSelect {
 			_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
 				ChatID:    update.CallbackQuery.Message.Chat.ID,
-				MessageID: update.CallbackQuery.Message.ID,
+				MessageID: update.CallbackQuery.Message.MessageID,
 			})
 			if errDelete != nil {
 				datePicker.onError(fmt.Errorf("failed to delete message onSelect: %w", errDelete))
@@ -64,7 +64,7 @@ func (datePicker *DatePicker) callback(ctx context.Context, b *bot.Bot, update *
 		if datePicker.deleteOnCancel {
 			_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
 				ChatID:    update.CallbackQuery.Message.Chat.ID,
-				MessageID: update.CallbackQuery.Message.ID,
+				MessageID: update.CallbackQuery.Message.MessageID,
 			})
 			if errDelete != nil {
 				datePicker.onError(fmt.Errorf("failed to delete message onCancel: %w", errDelete))
@@ -105,10 +105,10 @@ func (datePicker *DatePicker) callback(ctx context.Context, b *bot.Bot, update *
 	datePicker.callbackAnswer(ctx, b, update.CallbackQuery)
 }
 
-func (datePicker *DatePicker) showSelectMonth(ctx context.Context, b *bot.Bot, mes *models.Message) {
+func (datePicker *DatePicker) showSelectMonth(ctx context.Context, b *bot.Bot, mes models.InaccessibleMessage) {
 	_, err := b.EditMessageReplyMarkup(ctx, &bot.EditMessageReplyMarkupParams{
 		ChatID:      mes.Chat.ID,
-		MessageID:   mes.ID,
+		MessageID:   mes.MessageID,
 		ReplyMarkup: models.InlineKeyboardMarkup{InlineKeyboard: datePicker.buildMonthKeyboard()},
 	})
 	if err != nil {
@@ -116,10 +116,10 @@ func (datePicker *DatePicker) showSelectMonth(ctx context.Context, b *bot.Bot, m
 	}
 }
 
-func (datePicker *DatePicker) showSelectYear(ctx context.Context, b *bot.Bot, mes *models.Message, currentYear int) {
+func (datePicker *DatePicker) showSelectYear(ctx context.Context, b *bot.Bot, mes models.InaccessibleMessage, currentYear int) {
 	_, err := b.EditMessageReplyMarkup(ctx, &bot.EditMessageReplyMarkupParams{
 		ChatID:      mes.Chat.ID,
-		MessageID:   mes.ID,
+		MessageID:   mes.MessageID,
 		ReplyMarkup: models.InlineKeyboardMarkup{InlineKeyboard: datePicker.buildYearKeyboard(currentYear)},
 	})
 	if err != nil {
@@ -127,10 +127,10 @@ func (datePicker *DatePicker) showSelectYear(ctx context.Context, b *bot.Bot, me
 	}
 }
 
-func (datePicker *DatePicker) showMain(ctx context.Context, b *bot.Bot, mes *models.Message) {
+func (datePicker *DatePicker) showMain(ctx context.Context, b *bot.Bot, mes models.InaccessibleMessage) {
 	_, err := b.EditMessageReplyMarkup(ctx, &bot.EditMessageReplyMarkupParams{
 		ChatID:      mes.Chat.ID,
-		MessageID:   mes.ID,
+		MessageID:   mes.MessageID,
 		ReplyMarkup: models.InlineKeyboardMarkup{InlineKeyboard: datePicker.buildKeyboard()},
 	})
 	if err != nil {

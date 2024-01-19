@@ -81,7 +81,7 @@ func (d *Dialog) callback(ctx context.Context, b *bot.Bot, update *models.Update
 	if d.inline {
 		_, errEdit := b.EditMessageText(ctx, &bot.EditMessageTextParams{
 			ChatID:      update.CallbackQuery.Message.Chat.ID,
-			MessageID:   update.CallbackQuery.Message.ID,
+			MessageID:   update.CallbackQuery.Message.MessageID,
 			Text:        node.Text,
 			ParseMode:   models.ParseModeMarkdown,
 			ReplyMarkup: node.buildKB(d.prefix),

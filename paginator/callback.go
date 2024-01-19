@@ -47,7 +47,7 @@ func (p *Paginator) callback(ctx context.Context, b *bot.Bot, update *models.Upd
 
 		_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
 			ChatID:    update.CallbackQuery.Message.Chat.ID,
-			MessageID: update.CallbackQuery.Message.ID,
+			MessageID: update.CallbackQuery.Message.MessageID,
 		})
 		if errDelete != nil {
 			p.onError(errDelete)
@@ -61,7 +61,7 @@ func (p *Paginator) callback(ctx context.Context, b *bot.Bot, update *models.Upd
 
 	_, errEdit := b.EditMessageText(ctx, &bot.EditMessageTextParams{
 		ChatID:          update.CallbackQuery.Message.Chat.ID,
-		MessageID:       update.CallbackQuery.Message.ID,
+		MessageID:       update.CallbackQuery.Message.MessageID,
 		InlineMessageID: update.CallbackQuery.InlineMessageID,
 		Text:            p.buildText(),
 		ParseMode:       models.ParseModeMarkdown,

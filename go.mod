@@ -2,4 +2,4 @@ module github.com/go-telegram/ui
 
 go 1.20
 
-require github.com/go-telegram/bot v0.8.0
+require github.com/go-telegram/bot v1.0.1

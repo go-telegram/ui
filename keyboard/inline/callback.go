@@ -29,7 +29,7 @@ func (kb *Keyboard) callback(ctx context.Context, b *bot.Bot, update *models.Upd
 
 		_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
 			ChatID:    update.CallbackQuery.Message.Chat.ID,
-			MessageID: update.CallbackQuery.Message.ID,
+			MessageID: update.CallbackQuery.Message.MessageID,
 		})
 		if errDelete != nil {
 			kb.onError(fmt.Errorf("error delete message in callback, %w", errDelete))

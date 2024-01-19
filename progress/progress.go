@@ -9,7 +9,7 @@ import (
 	"github.com/go-telegram/bot/models"
 )
 
-type OnCancelFunc func(ctx context.Context, b *bot.Bot, message *models.Message)
+type OnCancelFunc func(ctx context.Context, b *bot.Bot, message models.InaccessibleMessage)
 type RenderTextFunc func(value float64) string
 type OnErrorHandler func(err error)
 
@@ -101,7 +101,7 @@ func (p *Progress) onCancelCall(ctx context.Context, b *bot.Bot, update *models.
 	if p.deleteOnCancel {
 		_, err := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
 			ChatID:    update.CallbackQuery.Message.Chat.ID,
-			MessageID: update.CallbackQuery.Message.ID,
+			MessageID: update.CallbackQuery.Message.MessageID,
 		})
 		if err != nil {
 			p.onError(err)

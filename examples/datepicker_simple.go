@@ -19,7 +19,7 @@ func handlerDatepickerSimple(ctx context.Context, b *bot.Bot, update *models.Upd
 	})
 }
 
-func onDatepickerSimpleSelect(ctx context.Context, b *bot.Bot, mes *models.Message, date time.Time) {
+func onDatepickerSimpleSelect(ctx context.Context, b *bot.Bot, mes models.InaccessibleMessage, date time.Time) {
 	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID: mes.Chat.ID,
 		Text:   "You select " + date.Format("2006-01-02"),
