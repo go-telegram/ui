@@ -47,6 +47,16 @@ func New(b *bot.Bot, opts ...Option) *Keyboard {
 	return kb
 }
 
+func (kb *Keyboard) DeleteAfterClick(delete bool) *Keyboard {
+	kb.deleteAfterClick = delete
+	return kb
+}
+
+func (kb *Keyboard) OnError(handler OnErrorHandler) *Keyboard {
+	kb.onError = handler
+	return kb
+}
+
 func (kb *Keyboard) MarshalJSON() ([]byte, error) {
 	return json.Marshal(models.InlineKeyboardMarkup{InlineKeyboard: kb.markup})
 }
