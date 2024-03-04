@@ -17,8 +17,8 @@ const (
 	DateModeInclude
 )
 
-type OnSelectHandler func(ctx context.Context, bot *bot.Bot, mes models.InaccessibleMessage, date time.Time)
-type OnCancelHandler func(ctx context.Context, bot *bot.Bot, mes models.InaccessibleMessage)
+type OnSelectHandler func(ctx context.Context, bot *bot.Bot, mes models.MaybeInaccessibleMessage, date time.Time)
+type OnCancelHandler func(ctx context.Context, bot *bot.Bot, mes models.MaybeInaccessibleMessage)
 type OnErrorHandler func(err error)
 
 type DatePicker struct {
@@ -80,4 +80,4 @@ func defaultOnError(err error) {
 	log.Printf("[TG-UI-DATEPICKER] [ERROR] %s", err)
 }
 
-func defaultOnCancel(_ context.Context, _ *bot.Bot, _ models.InaccessibleMessage) {}
+func defaultOnCancel(_ context.Context, _ *bot.Bot, _ models.MaybeInaccessibleMessage) {}

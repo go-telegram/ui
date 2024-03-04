@@ -14,10 +14,10 @@ import (
 func handlerProgressCustom(ctx context.Context, b *bot.Bot, update *models.Update) {
 	cancelCtx, cancel := context.WithCancel(context.Background())
 
-	progressCancelFunc := func(ctx context.Context, b *bot.Bot, mes models.InaccessibleMessage) {
+	progressCancelFunc := func(ctx context.Context, b *bot.Bot, mes models.MaybeInaccessibleMessage) {
 		cancel()
 		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID: mes.Chat.ID,
+			ChatID: mes.Message.Chat.ID,
 			Text:   "Progress cancelled",
 		})
 	}

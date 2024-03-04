@@ -80,8 +80,8 @@ func (d *Dialog) callback(ctx context.Context, b *bot.Bot, update *models.Update
 
 	if d.inline {
 		_, errEdit := b.EditMessageText(ctx, &bot.EditMessageTextParams{
-			ChatID:      update.CallbackQuery.Message.Chat.ID,
-			MessageID:   update.CallbackQuery.Message.MessageID,
+			ChatID:      update.CallbackQuery.Message.Message.Chat.ID,
+			MessageID:   update.CallbackQuery.Message.Message.ID,
 			Text:        node.Text,
 			ParseMode:   models.ParseModeMarkdown,
 			ReplyMarkup: node.buildKB(d.prefix),
@@ -93,7 +93,7 @@ func (d *Dialog) callback(ctx context.Context, b *bot.Bot, update *models.Update
 	}
 
 	_, errSend := b.SendMessage(ctx, &bot.SendMessageParams{
-		ChatID:      update.CallbackQuery.Message.Chat.ID,
+		ChatID:      update.CallbackQuery.Message.Message.Chat.ID,
 		Text:        node.Text,
 		ParseMode:   models.ParseModeMarkdown,
 		ReplyMarkup: node.buildKB(d.prefix),

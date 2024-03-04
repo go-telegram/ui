@@ -9,8 +9,8 @@ import (
 	"github.com/go-telegram/bot/models"
 )
 
-type OnSelectFunc func(ctx context.Context, b *bot.Bot, message models.InaccessibleMessage, item int)
-type OnCancelFunc func(ctx context.Context, b *bot.Bot, message models.InaccessibleMessage)
+type OnSelectFunc func(ctx context.Context, b *bot.Bot, message models.MaybeInaccessibleMessage, item int)
+type OnCancelFunc func(ctx context.Context, b *bot.Bot, message models.MaybeInaccessibleMessage)
 type OnErrorFunc func(err error)
 
 type Slide struct {

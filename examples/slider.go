@@ -43,16 +43,16 @@ func handlerSlider(ctx context.Context, b *bot.Bot, update *models.Update) {
 	sl.Show(ctx, b, update.Message.Chat.ID)
 }
 
-func sliderOnSelect(ctx context.Context, b *bot.Bot, message models.InaccessibleMessage, item int) {
+func sliderOnSelect(ctx context.Context, b *bot.Bot, message models.MaybeInaccessibleMessage, item int) {
 	b.SendMessage(ctx, &bot.SendMessageParams{
-		ChatID: message.Chat.ID,
+		ChatID: message.Message.Chat.ID,
 		Text:   "Select " + strconv.Itoa(item),
 	})
 }
 
-func sliderOnCancel(ctx context.Context, b *bot.Bot, message models.InaccessibleMessage) {
+func sliderOnCancel(ctx context.Context, b *bot.Bot, message models.MaybeInaccessibleMessage) {
 	b.SendMessage(ctx, &bot.SendMessageParams{
-		ChatID: message.Chat.ID,
+		ChatID: message.Message.Chat.ID,
 		Text:   "Cancel",
 	})
 }

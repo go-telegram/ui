@@ -41,8 +41,8 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 			b.UnregisterHandler(s.callbackHandlerID)
 
 			_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
-				ChatID:    update.CallbackQuery.Message.Chat.ID,
-				MessageID: update.CallbackQuery.Message.MessageID,
+				ChatID:    update.CallbackQuery.Message.Message.Chat.ID,
+				MessageID: update.CallbackQuery.Message.Message.ID,
 			})
 			if errDelete != nil {
 				s.onError(errDelete)
@@ -56,8 +56,8 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 			b.UnregisterHandler(s.callbackHandlerID)
 
 			_, errDelete := b.DeleteMessage(ctx, &bot.DeleteMessageParams{
-				ChatID:    update.CallbackQuery.Message.Chat.ID,
-				MessageID: update.CallbackQuery.Message.MessageID,
+				ChatID:    update.CallbackQuery.Message.Message.Chat.ID,
+				MessageID: update.CallbackQuery.Message.Message.ID,
 			})
 			if errDelete != nil {
 				s.onError(errDelete)
@@ -71,8 +71,8 @@ func (s *Slider) callback(ctx context.Context, b *bot.Bot, update *models.Update
 	slide := s.slides[s.current]
 
 	editParams := &bot.EditMessageMediaParams{
-		ChatID:    update.CallbackQuery.Message.Chat.ID,
-		MessageID: update.CallbackQuery.Message.MessageID,
+		ChatID:    update.CallbackQuery.Message.Message.Chat.ID,
+		MessageID: update.CallbackQuery.Message.Message.ID,
 		Media: &models.InputMediaPhoto{
 			Media:     slide.Photo,
 			Caption:   slide.Text,
