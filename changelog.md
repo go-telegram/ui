@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.3.1 (2024-03-05)
+
+- add `WithPrefix` options to all widgets
+- add `Prefix() string` func to all widgets
+
 ## v0.3.0 (2024-03-04)
 
 - update bot lib version to v1.1.5
