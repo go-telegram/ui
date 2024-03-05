@@ -28,18 +28,16 @@ go get github.com/go-telegram/ui
 UI components register own bot handlers on init. 
 If you restart the bot instance, inline buttons in already opened components can't work.
 
-For example, you can handle CallbackQuery in the default handler and send a message to the user.
+For solving this issue, you should use `bot.WithPrefix` option for instance of widgets.
+
+Example:
 
 ```go
-
-func defaultHandler(ctx context.Context, b *bot.Bot, update bot.Update)  {
-	if update.CallbackQuery != nil {
-		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID:    update.CallbackQuery.Message.Chat.ID, 
-			Text: "Bot was updated. Try to call calendar again",
-		})  
-	}
-}
+picker := datepicker.New(
+    b, 
+    onDatepickerSimpleSelect, 
+    datepicker.WithPrefix("datepicker-simple"),
+)
 ```
 
 ### Live demo
