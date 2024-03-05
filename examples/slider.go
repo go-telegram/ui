@@ -36,6 +36,7 @@ func handlerSlider(ctx context.Context, b *bot.Bot, update *models.Update) {
 	opts := []slider.Option{
 		slider.OnSelect("Select", true, sliderOnSelect),
 		slider.OnCancel("Cancel", true, sliderOnCancel),
+		slider.WithPrefix("slider"),
 	}
 
 	sl := slider.New(slides, opts...)

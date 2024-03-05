@@ -18,7 +18,7 @@ var (
 )
 
 func handlerDialog(ctx context.Context, b *bot.Bot, update *models.Update) {
-	p := dialog.New(dialogNodes)
+	p := dialog.New(dialogNodes, dialog.WithPrefix("dialog"))
 
 	p.Show(ctx, b, update.Message.Chat.ID, "start")
 }

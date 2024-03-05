@@ -52,6 +52,11 @@ func New(data []string, opts ...Option) *Paginator {
 	return p
 }
 
+// Prefix returns the prefix of the widget
+func (p *Paginator) Prefix() string {
+	return p.prefix
+}
+
 func defaultOnError(err error) {
 	log.Printf("[TG-UI-PAGINATOR] [ERROR] %s", err)
 }

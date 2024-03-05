@@ -15,3 +15,10 @@ func OnError(f func(err error)) Option {
 		kb.onError = f
 	}
 }
+
+// WithPrefix is a keyboard option that sets a prefix for the widget
+func WithPrefix(s string) Option {
+	return func(w *Keyboard) {
+		w.prefix = s
+	}
+}

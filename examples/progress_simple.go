@@ -10,12 +10,16 @@ import (
 	"github.com/go-telegram/ui/progress"
 )
 
+var demoProgressSimple *progress.Progress
+
+func initProgressSimple() {
+	demoProgressSimple = progress.New(progress.WithPrefix("progress-simple"))
+}
+
 func handlerProgressSimple(ctx context.Context, b *bot.Bot, update *models.Update) {
-	p := progress.New()
+	demoProgressSimple.Show(ctx, b, update.Message.Chat.ID)
 
-	p.Show(ctx, b, update.Message.Chat.ID)
-
-	go doSomeLongTaskSimple(ctx, b, p, update.Message.Chat.ID)
+	go doSomeLongTaskSimple(ctx, b, demoProgressSimple, update.Message.Chat.ID)
 }
 
 func doSomeLongTaskSimple(ctx context.Context, b *bot.Bot, p *progress.Progress, chatID any) {

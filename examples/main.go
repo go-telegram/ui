@@ -38,6 +38,12 @@ func main() {
 		panic(err)
 	}
 
+	initDatePickerSimple(b)
+	initDatePickerCustom(b)
+	initInlineKeyboard(b)
+	initPaginator()
+	initProgressSimple()
+
 	b.Start(ctx)
 }
 

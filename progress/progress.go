@@ -42,6 +42,11 @@ func New(opts ...Option) *Progress {
 	return p
 }
 
+// Prefix returns the prefix of the widget
+func (p *Progress) Prefix() string {
+	return p.prefix
+}
+
 func (p *Progress) Show(ctx context.Context, b *bot.Bot, chatID any) error {
 	sendParams := &bot.SendMessageParams{
 		ChatID:    chatID,

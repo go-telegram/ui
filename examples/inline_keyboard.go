@@ -8,8 +8,10 @@ import (
 	"github.com/go-telegram/ui/keyboard/inline"
 )
 
-func handlerInlineKeyboard(ctx context.Context, b *bot.Bot, update *models.Update) {
-	kb := inline.New(b).
+var demoInlineKeyboard *inline.Keyboard
+
+func initInlineKeyboard(b *bot.Bot) {
+	demoInlineKeyboard = inline.New(b, inline.WithPrefix("inline")).
 		Row().
 		Button("Row 1, Btn 1", []byte("1-1"), onInlineKeyboardSelect).
 		Button("Row 1, Btn 2", []byte("1-2"), onInlineKeyboardSelect).
@@ -24,11 +26,14 @@ func handlerInlineKeyboard(ctx context.Context, b *bot.Bot, update *models.Updat
 		Button("Row 3, Btn 4", []byte("3-4"), onInlineKeyboardSelect).
 		Row().
 		Button("Cancel", []byte("cancel"), onInlineKeyboardSelect)
+}
+
+func handlerInlineKeyboard(ctx context.Context, b *bot.Bot, update *models.Update) {
 
 	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID:      update.Message.Chat.ID,
 		Text:        "Select the variant",
-		ReplyMarkup: kb,
+		ReplyMarkup: demoInlineKeyboard,
 	})
 }
 

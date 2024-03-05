@@ -29,3 +29,10 @@ func OnError(f OnErrorHandler) Option {
 		p.onError = f
 	}
 }
+
+// WithPrefix is a keyboard option that sets a prefix for the widget
+func WithPrefix(s string) Option {
+	return func(w *Paginator) {
+		w.prefix = s
+	}
+}

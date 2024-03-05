@@ -73,3 +73,10 @@ func Dates(datesMode DatesMode, dates []time.Time) Option {
 		dp.datesMode = datesMode
 	}
 }
+
+// WithPrefix is a keyboard option that sets a prefix for the widget
+func WithPrefix(s string) Option {
+	return func(w *DatePicker) {
+		w.prefix = s
+	}
+}

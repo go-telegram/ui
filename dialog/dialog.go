@@ -36,6 +36,11 @@ func New(nodes []Node, opts ...Option) *Dialog {
 	return p
 }
 
+// Prefix returns the prefix of the widget
+func (d *Dialog) Prefix() string {
+	return d.prefix
+}
+
 func defaultOnError(err error) {
 	log.Printf("[TG-UI-DIALOG] [ERROR] %s", err)
 }

@@ -9,13 +9,17 @@ import (
 	"github.com/go-telegram/ui/datepicker"
 )
 
-func handlerDatepickerSimple(ctx context.Context, b *bot.Bot, update *models.Update) {
-	kb := datepicker.New(b, onDatepickerSimpleSelect)
+var demoDatePickerSimple *datepicker.DatePicker
 
+func initDatePickerSimple(b *bot.Bot) {
+	demoDatePickerSimple = datepicker.New(b, onDatepickerSimpleSelect, datepicker.WithPrefix("datepicker-simple"))
+}
+
+func handlerDatepickerSimple(ctx context.Context, b *bot.Bot, update *models.Update) {
 	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID:      update.Message.Chat.ID,
 		Text:        "Select any date",
-		ReplyMarkup: kb,
+		ReplyMarkup: demoDatePickerSimple,
 	})
 }
 

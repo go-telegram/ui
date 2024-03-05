@@ -9,11 +9,9 @@ import (
 	"github.com/go-telegram/ui/datepicker"
 )
 
-func makeTime(year, month, day int) time.Time {
-	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Local)
-}
+var demoDatePickerCustom *datepicker.DatePicker
 
-func handlerDatepickerCustom(ctx context.Context, b *bot.Bot, update *models.Update) {
+func initDatePickerCustom(b *bot.Bot) {
 	excludeDays := []time.Time{
 		makeTime(2020, 1, 10),
 		makeTime(2020, 1, 13),
@@ -30,14 +28,21 @@ func handlerDatepickerCustom(ctx context.Context, b *bot.Bot, update *models.Upd
 		datepicker.OnCancel(onDatepickerCustomCancel),
 		datepicker.Language("ru"),
 		datepicker.Dates(datepicker.DateModeExclude, excludeDays),
+		datepicker.WithPrefix("datepicker-custom"),
 	}
 
-	kb := datepicker.New(b, onDatepickerCustomSelect, dpOpts...)
+	demoDatePickerCustom = datepicker.New(b, onDatepickerCustomSelect, dpOpts...)
+}
 
+func makeTime(year, month, day int) time.Time {
+	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Local)
+}
+
+func handlerDatepickerCustom(ctx context.Context, b *bot.Bot, update *models.Update) {
 	b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID:      update.Message.Chat.ID,
 		Text:        "Select the date",
-		ReplyMarkup: kb,
+		ReplyMarkup: demoDatePickerCustom,
 	})
 }
 

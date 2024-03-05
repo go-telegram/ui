@@ -31,3 +31,10 @@ func WithCancel(buttonText string, deleteOnCancel bool, onCancel OnCancelFunc) O
 		p.onCancel = onCancel
 	}
 }
+
+// WithPrefix is a keyboard option that sets a prefix for the widget
+func WithPrefix(s string) Option {
+	return func(w *Progress) {
+		w.prefix = s
+	}
+}

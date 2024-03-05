@@ -72,6 +72,11 @@ func New(b *bot.Bot, onSelect OnSelectHandler, opts ...Option) *DatePicker {
 	return datePicker
 }
 
+// Prefix returns the prefix of the widget
+func (datePicker *DatePicker) Prefix() string {
+	return datePicker.prefix
+}
+
 func (datePicker *DatePicker) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&models.InlineKeyboardMarkup{InlineKeyboard: datePicker.buildKeyboard()})
 }

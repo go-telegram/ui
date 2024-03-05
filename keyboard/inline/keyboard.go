@@ -47,6 +47,11 @@ func New(b *bot.Bot, opts ...Option) *Keyboard {
 	return kb
 }
 
+// Prefix returns the prefix of the widget
+func (kb *Keyboard) Prefix() string {
+	return kb.prefix
+}
+
 func (kb *Keyboard) MarshalJSON() ([]byte, error) {
 	return json.Marshal(models.InlineKeyboardMarkup{InlineKeyboard: kb.markup})
 }

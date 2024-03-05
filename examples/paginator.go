@@ -53,13 +53,17 @@ var (
 	}
 )
 
-func handlerPaginator(ctx context.Context, b *bot.Bot, update *models.Update) {
+var demoPaginator *paginator.Paginator
+
+func initPaginator() {
 	opts := []paginator.Option{
 		paginator.PerPage(3),
 		paginator.WithCloseButton("Close"),
+		paginator.WithPrefix("paginator"),
 	}
+	demoPaginator = paginator.New(data, opts...)
+}
 
-	p := paginator.New(data, opts...)
-
-	p.Show(ctx, b, update.Message.Chat.ID)
+func handlerPaginator(ctx context.Context, b *bot.Bot, update *models.Update) {
+	demoPaginator.Show(ctx, b, update.Message.Chat.ID)
 }

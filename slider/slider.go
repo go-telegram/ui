@@ -58,6 +58,11 @@ func New(slides []Slide, opts ...Option) *Slider {
 	return s
 }
 
+// Prefix returns the prefix of the widget
+func (s *Slider) Prefix() string {
+	return s.prefix
+}
+
 func defaultOnError(err error) {
 	log.Printf("[TG-UI-SLIDER] [ERROR] %s", err)
 }
