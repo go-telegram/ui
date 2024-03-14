@@ -56,9 +56,9 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 	})
 }
 
-func onInlineKeyboardSelect(ctx context.Context, b *bot.Bot, mes *models.Message, data []byte) {
+func onInlineKeyboardSelect(ctx context.Context, b *bot.Bot, mes models.MaybeInaccessibleMessage, data []byte) {
 	b.SendMessage(ctx, &bot.SendMessageParams{
-		ChatID: mes.Chat.ID,
+		ChatID: mes.Message.Chat.ID,
 		Text:   "You selected: " + string(data),
 	})
 }
