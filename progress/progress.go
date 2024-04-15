@@ -21,10 +21,11 @@ type Progress struct {
 
 	message *models.Message
 
-	cancelText     string
-	onCancel       OnCancelFunc
-	deleteOnCancel bool
-	canceled       bool
+	cancelText        string
+	onCancel          OnCancelFunc
+	onCancelHandlerId string
+	deleteOnCancel    bool
+	canceled          bool
 }
 
 func New(opts ...Option) *Progress {
@@ -65,7 +66,8 @@ func (p *Progress) Show(ctx context.Context, b *bot.Bot, chatID any) error {
 	}
 
 	if p.onCancel != nil {
-		b.RegisterHandler(bot.HandlerTypeCallbackQueryData, p.prefix, bot.MatchTypeExact, p.onCancelCall)
+		p.onCancelHandlerId = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, p.prefix,
+			bot.MatchTypeExact, p.onCancelCall)
 	}
 
 	p.message = m
@@ -80,6 +82,14 @@ func (p *Progress) Delete(ctx context.Context, b *bot.Bot) {
 	})
 	if err != nil {
 		p.onError(err)
+	}
+}
+
+// ctx is being passed for forward compatibility reasons
+func (p *Progress) Done(ctx context.Context, b *bot.Bot) {
+	if p.onCancelHandlerId != "" {
+		b.UnregisterHandler(p.onCancelHandlerId)
+		p.onCancelHandlerId = ""
 	}
 }
 
@@ -113,4 +123,5 @@ func (p *Progress) onCancelCall(ctx context.Context, b *bot.Bot, update *models.
 		}
 	}
 	p.onCancel(ctx, b, update.CallbackQuery.Message)
+	p.Done(ctx, b)
 }
