@@ -63,6 +63,7 @@ func doSomeLongTaskSimple(ctx context.Context, b *bot.Bot, p *progress.Progress,
 		time.Sleep(time.Second)
 		if v == 100 {
 			p.Delete(ctx, b)
+			p.Done(ctx, b)
 			b.SendMessage(ctx, &bot.SendMessageParams{
 				ChatID: chatID,
 				Text:   "Completed",
