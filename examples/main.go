@@ -25,6 +25,7 @@ func main() {
 		bot.WithMessageTextHandler("/datepicker_simple", bot.MatchTypeExact, handlerDatepickerSimple),
 		bot.WithMessageTextHandler("/datepicker_custom", bot.MatchTypeExact, handlerDatepickerCustom),
 		bot.WithMessageTextHandler("/inline_keyboard", bot.MatchTypeExact, handlerInlineKeyboard),
+		bot.WithMessageTextHandler("/reply_keyboard", bot.MatchTypeExact, handlerReplyKeyboard),
 		bot.WithMessageTextHandler("/paginator", bot.MatchTypeExact, handlerPaginator),
 		bot.WithMessageTextHandler("/slider", bot.MatchTypeExact, handlerSlider),
 		bot.WithMessageTextHandler("/progress_simple", bot.MatchTypeExact, handlerProgressSimple),
@@ -41,6 +42,7 @@ func main() {
 	initDatePickerSimple(b)
 	initDatePickerCustom(b)
 	initInlineKeyboard(b)
+	initReplyKeyboard(b)
 	initPaginator()
 	initProgressSimple()
 

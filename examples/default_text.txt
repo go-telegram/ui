@@ -22,6 +22,10 @@ _todo_
 /inline\_keyboard
 Simple multiline keyboard
 
+🆎 *Reply Keyboard*
+/reply\_keyboard
+Simple multiline reply markup keyboard
+
 🔢 *Paginator*
 /paginator
 Paginator with 40 strings\. Per page 3 items\. With 'close' button\.

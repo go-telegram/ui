@@ -8,6 +8,7 @@ UI controls for telegram bot [go-telegram/bot](https://github.com/go-telegram/bo
 
 - datepicker
 - inline keyboard
+- reply keyboard
 - paginator
 - slider
 - progress
@@ -46,6 +47,10 @@ You can run demo bot from `examples` folder.
 
 Before start, you should set `EXAMPLE_TELEGRAM_BOT_TOKEN` environment variable to your bot token.
 
+```go
+    go run examples/*.go
+```
+
 Also, you can try [online version of this bot](https://t.me/gotelegramuidemobot) right now.
 
 ## DatePicker
@@ -53,7 +58,6 @@ Also, you can try [online version of this bot](https://t.me/gotelegramuidemobot)
 ![datepicker_1.png](datepicker/datepicker.png)
 
 - custom localizations
-- set from/to dates
 - define include/exclude dates
 
 [Documentation](datepicker/readme.md)
@@ -64,7 +68,16 @@ Also, you can try [online version of this bot](https://t.me/gotelegramuidemobot)
 
 Small helper for easy building of inline keyboard.
 
-[Documentation](keyboard/inline/readme.md)
+![paginator.png](paginator/paginator.png)
+
+## Reply Keyboard
+
+TODO!
+![inline_keyboard.png](keyboard/inline/inline_keyboard.png)
+
+Small helper for easy building of a reply keyboard.
+
+[Documentation](keyboard/reply/readme.md)
 
 ## Paginator
 
