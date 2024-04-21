@@ -72,12 +72,9 @@ Small helper for easy building of inline keyboard.
 
 ## Reply Keyboard
 
-TODO!
-![inline_keyboard.png](keyboard/inline/inline_keyboard.png)
+![reply_keyboard.png](keyboard/reply/reply_keyboard.png)
 
-Small helper for easy building of a reply keyboard.
-
-[Documentation](keyboard/reply/readme.md)
+Small helper for easy building of a reply keyboard markup.
 
 ## Paginator
 
