@@ -68,13 +68,15 @@ Also, you can try [online version of this bot](https://t.me/gotelegramuidemobot)
 
 Small helper for easy building of inline keyboard.
 
-![paginator.png](paginator/paginator.png)
+[Documentation](keyboard/inline/readme.md)
 
 ## Reply Keyboard
 
 ![reply_keyboard.png](keyboard/reply/reply_keyboard.png)
 
 Small helper for easy building of a reply keyboard markup.
+
+[Documentation](keyboard/reply/readme.md)
 
 ## Paginator
 
