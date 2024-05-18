@@ -80,3 +80,17 @@ func WithPrefix(s string) Option {
 		w.prefix = s
 	}
 }
+
+// NoDeleteAfterSelect is a keyboard option that prevents the hide keyboard after select
+func NoDeleteAfterSelect() Option {
+	return func(dp *DatePicker) {
+		dp.deleteOnSelect = false
+	}
+}
+
+// NoDeleteAfterCancel is a keyboard option that prevents the hide keyboard after cancel
+func NoDeleteAfterCancel() Option {
+	return func(dp *DatePicker) {
+		dp.deleteOnCancel = false
+	}
+}
