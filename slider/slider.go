@@ -46,9 +46,11 @@ type Slider struct {
 
 func New(slides []Slide, opts ...Option) *Slider {
 	s := &Slider{
-		prefix:  bot.RandomString(16),
-		slides:  slides,
-		onError: defaultOnError,
+		prefix:         bot.RandomString(16),
+		slides:         slides,
+		onError:        defaultOnError,
+		deleteOnSelect: true,
+		deleteOnCancel: true,
 	}
 
 	for _, opt := range opts {

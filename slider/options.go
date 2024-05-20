@@ -33,3 +33,17 @@ func WithPrefix(s string) Option {
 		w.prefix = s
 	}
 }
+
+// NoDeleteAfterSelect is a keyboard option that prevents the hide widget after select
+func NoDeleteAfterSelect() Option {
+	return func(s *Slider) {
+		s.deleteOnSelect = false
+	}
+}
+
+// NoDeleteAfterCancel is a keyboard option that prevents the hide widget after cancel
+func NoDeleteAfterCancel() Option {
+	return func(s *Slider) {
+		s.deleteOnCancel = false
+	}
+}
