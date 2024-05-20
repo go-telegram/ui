@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.2 (2024-05-20)
+
+- added 'NoDeleteAfterSelect' and 'NoDeleteAfterCancel' datepicker & slider options methods (#8) 
+
 ## v0.3.1 (2024-03-05)
 
 - add `WithPrefix` options to all widgets
