@@ -43,8 +43,8 @@ func main() {
 	initDatePickerCustom(b)
 	initInlineKeyboard(b)
 	initReplyKeyboard(b)
-	initPaginator()
-	initProgressSimple()
+	initPaginator(b)
+	initProgressSimple(b)
 
 	b.Start(ctx)
 }

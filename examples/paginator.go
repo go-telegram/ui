@@ -55,13 +55,13 @@ var (
 
 var demoPaginator *paginator.Paginator
 
-func initPaginator() {
+func initPaginator(b *bot.Bot) {
 	opts := []paginator.Option{
 		paginator.PerPage(3),
 		paginator.WithCloseButton("Close"),
 		paginator.WithPrefix("paginator"),
 	}
-	demoPaginator = paginator.New(data, opts...)
+	demoPaginator = paginator.New(b, data, opts...)
 }
 
 func handlerPaginator(ctx context.Context, b *bot.Bot, update *models.Update) {
