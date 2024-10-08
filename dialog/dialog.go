@@ -13,20 +13,24 @@ import (
 type OnErrorHandler func(err error)
 
 type Dialog struct {
-	data    []string
-	prefix  string
-	onError OnErrorHandler
-	nodes   []Node
-	inline  bool
+	data           []string
+	prefix         string
+	nodePrefix     string
+	callbackPrefix string
+	onError        OnErrorHandler
+	nodes          []Node
+	inline         bool
 
 	callbackHandlerID string
 }
 
 func New(b *bot.Bot, nodes []Node, opts ...Option) *Dialog {
 	p := &Dialog{
-		prefix:  bot.RandomString(16),
-		onError: defaultOnError,
-		nodes:   nodes,
+		prefix:         bot.RandomString(12),
+		callbackPrefix: bot.RandomString(4),
+		nodePrefix:     bot.RandomString(4),
+		onError:        defaultOnError,
+		nodes:          nodes,
 	}
 
 	for _, opt := range opts {
@@ -52,7 +56,7 @@ func (d *Dialog) showNode(ctx context.Context, b *bot.Bot, chatID any, node Node
 		ChatID:      chatID,
 		Text:        node.Text,
 		ParseMode:   models.ParseModeMarkdown,
-		ReplyMarkup: node.buildKB(d.prefix),
+		ReplyMarkup: node.buildKB(d.prefix, d.nodePrefix, d.callbackPrefix),
 	}
 
 	return b.SendMessage(ctx, params)
@@ -76,7 +80,19 @@ func (d *Dialog) callback(ctx context.Context, b *bot.Bot, update *models.Update
 		d.onError(fmt.Errorf("failed to answer callback query"))
 	}
 
-	nodeID := strings.TrimPrefix(update.CallbackQuery.Data, d.prefix)
+	btnID, isCustomCallback := strings.CutPrefix(update.CallbackQuery.Data, d.prefix+d.callbackPrefix)
+	if isCustomCallback {
+		btn, ok := d.findButton(btnID)
+		if !ok {
+			d.onError(fmt.Errorf("failed to find button with id %s", btnID))
+			return
+		}
+		update.CallbackQuery.Data = btn.CallbackData
+		btn.CallbackHandler(ctx, b, update)
+		return
+	}
+
+	nodeID := strings.TrimPrefix(update.CallbackQuery.Data, d.prefix+d.nodePrefix)
 	node, ok := d.findNode(nodeID)
 	if !ok {
 		d.onError(fmt.Errorf("failed to find node with id %s", nodeID))
@@ -89,7 +105,7 @@ func (d *Dialog) callback(ctx context.Context, b *bot.Bot, update *models.Update
 			MessageID:   update.CallbackQuery.Message.Message.ID,
 			Text:        node.Text,
 			ParseMode:   models.ParseModeMarkdown,
-			ReplyMarkup: node.buildKB(d.prefix),
+			ReplyMarkup: node.buildKB(d.prefix, d.nodePrefix, d.callbackPrefix),
 		})
 		if errEdit != nil {
 			d.onError(errEdit)
@@ -101,7 +117,7 @@ func (d *Dialog) callback(ctx context.Context, b *bot.Bot, update *models.Update
 		ChatID:      update.CallbackQuery.Message.Message.Chat.ID,
 		Text:        node.Text,
 		ParseMode:   models.ParseModeMarkdown,
-		ReplyMarkup: node.buildKB(d.prefix),
+		ReplyMarkup: node.buildKB(d.prefix, d.nodePrefix, d.callbackPrefix),
 	})
 	if errSend != nil {
 		d.onError(errSend)
@@ -116,4 +132,17 @@ func (d *Dialog) findNode(id string) (Node, bool) {
 	}
 
 	return Node{}, false
+}
+
+func (d *Dialog) findButton(ID string) (Button, bool) {
+	for _, node := range d.nodes {
+		for _, row := range node.Keyboard {
+			for _, btn := range row {
+				if btn.ID == ID {
+					return btn, true
+				}
+			}
+		}
+	}
+	return Button{}, false
 }
