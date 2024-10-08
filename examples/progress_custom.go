@@ -31,7 +31,7 @@ func handlerProgressCustom(ctx context.Context, b *bot.Bot, update *models.Updat
 		progress.WithRenderTextFunc(renderFunc),
 	}
 
-	p := progress.New(opts...)
+	p := progress.New(b, opts...)
 
 	p.Show(ctx, b, update.Message.Chat.ID)
 

@@ -18,19 +18,20 @@ const (
 )
 
 type Paginator struct {
-	data        []string
-	perPage     int
-	currentPage int
-	pagesCount  int
-	separator   string
-	prefix      string
-	closeButton string
-	onError     OnErrorHandler
+	data                []string
+	perPage             int
+	currentPage         int
+	pagesCount          int
+	separator           string
+	prefix              string
+	closeButton         string
+	onError             OnErrorHandler
+	withoutEmptyButtons bool
 
 	callbackHandlerID string
 }
 
-func New(data []string, opts ...Option) *Paginator {
+func New(b *bot.Bot, data []string, opts ...Option) *Paginator {
 	p := &Paginator{
 		prefix:      bot.RandomString(16),
 		data:        data,
@@ -49,6 +50,8 @@ func New(data []string, opts ...Option) *Paginator {
 		p.pagesCount++
 	}
 
+	p.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, p.prefix, bot.MatchTypePrefix, p.callback)
+
 	return p
 }
 
@@ -62,8 +65,6 @@ func defaultOnError(err error) {
 }
 
 func (p *Paginator) Show(ctx context.Context, b *bot.Bot, chatID any) (*models.Message, error) {
-	p.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, p.prefix, bot.MatchTypePrefix, p.callback)
-
 	return b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID:      chatID,
 		Text:        p.buildText(),

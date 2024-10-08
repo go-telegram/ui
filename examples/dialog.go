@@ -18,13 +18,13 @@ var (
 )
 
 func handlerDialog(ctx context.Context, b *bot.Bot, update *models.Update) {
-	p := dialog.New(dialogNodes, dialog.WithPrefix("dialog"))
+	p := dialog.New(b, dialogNodes, dialog.WithPrefix("dialog"))
 
 	p.Show(ctx, b, update.Message.Chat.ID, "start")
 }
 
 func handlerDialogInline(ctx context.Context, b *bot.Bot, update *models.Update) {
-	p := dialog.New(dialogNodes, dialog.Inline())
+	p := dialog.New(b, dialogNodes, dialog.Inline())
 
 	p.Show(ctx, b, update.Message.Chat.ID, "start")
 }

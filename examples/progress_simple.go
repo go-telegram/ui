@@ -12,8 +12,8 @@ import (
 
 var demoProgressSimple *progress.Progress
 
-func initProgressSimple() {
-	demoProgressSimple = progress.New(progress.WithPrefix("progress-simple"))
+func initProgressSimple(b *bot.Bot) {
+	demoProgressSimple = progress.New(b, progress.WithPrefix("progress-simple"))
 }
 
 func handlerProgressSimple(ctx context.Context, b *bot.Bot, update *models.Update) {

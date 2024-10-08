@@ -39,7 +39,7 @@ func handlerSlider(ctx context.Context, b *bot.Bot, update *models.Update) {
 		slider.WithPrefix("slider"),
 	}
 
-	sl := slider.New(slides, opts...)
+	sl := slider.New(b, slides, opts...)
 
 	sl.Show(ctx, b, update.Message.Chat.ID)
 }

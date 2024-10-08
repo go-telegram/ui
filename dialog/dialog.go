@@ -22,7 +22,7 @@ type Dialog struct {
 	callbackHandlerID string
 }
 
-func New(nodes []Node, opts ...Option) *Dialog {
+func New(b *bot.Bot, nodes []Node, opts ...Option) *Dialog {
 	p := &Dialog{
 		prefix:  bot.RandomString(16),
 		onError: defaultOnError,
@@ -32,6 +32,8 @@ func New(nodes []Node, opts ...Option) *Dialog {
 	for _, opt := range opts {
 		opt(p)
 	}
+
+	p.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, p.prefix, bot.MatchTypePrefix, p.callback)
 
 	return p
 }
@@ -57,8 +59,6 @@ func (d *Dialog) showNode(ctx context.Context, b *bot.Bot, chatID any, node Node
 }
 
 func (d *Dialog) Show(ctx context.Context, b *bot.Bot, chatID any, nodeID string) (*models.Message, error) {
-	d.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, d.prefix, bot.MatchTypePrefix, d.callback)
-
 	node, ok := d.findNode(nodeID)
 	if !ok {
 		return nil, fmt.Errorf("failed to find node with id %s", nodeID)

@@ -36,3 +36,10 @@ func WithPrefix(s string) Option {
 		w.prefix = s
 	}
 }
+
+// WithoutEmptyButtons is a keyboard option that hides empty buttons
+func WithoutEmptyButtons() Option {
+	return func(p *Paginator) {
+		p.withoutEmptyButtons = true
+	}
+}

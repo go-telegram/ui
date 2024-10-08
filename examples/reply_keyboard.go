@@ -11,12 +11,7 @@ import (
 var demoReplyKeyboard *reply.ReplyKeyboard
 
 func initReplyKeyboard(b *bot.Bot) {
-	demoReplyKeyboard = reply.New(
-		b,
-		reply.WithPrefix("reply_keyboard"),
-		reply.IsSelective(),
-		reply.IsOneTimeKeyboard(),
-	).
+	demoReplyKeyboard = reply.New(reply.WithPrefix("reply_keyboard"), reply.IsSelective(), reply.IsOneTimeKeyboard()).
 		Button("Button", b, bot.MatchTypeExact, onReplyKeyboardSelect).
 		Row().
 		Button("Cancel", b, bot.MatchTypeExact, onReplyKeyboardSelect)

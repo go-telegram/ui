@@ -44,7 +44,7 @@ type Slider struct {
 	callbackHandlerID string
 }
 
-func New(slides []Slide, opts ...Option) *Slider {
+func New(b *bot.Bot, slides []Slide, opts ...Option) *Slider {
 	s := &Slider{
 		prefix:         bot.RandomString(16),
 		slides:         slides,
@@ -56,6 +56,8 @@ func New(slides []Slide, opts ...Option) *Slider {
 	for _, opt := range opts {
 		opt(s)
 	}
+
+	s.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, s.prefix, bot.MatchTypePrefix, s.callback)
 
 	return s
 }
@@ -70,8 +72,6 @@ func defaultOnError(err error) {
 }
 
 func (s *Slider) Show(ctx context.Context, b *bot.Bot, chatID any) (*models.Message, error) {
-	s.callbackHandlerID = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, s.prefix, bot.MatchTypePrefix, s.callback)
-
 	slide := s.slides[s.current]
 
 	sendParams := &bot.SendPhotoParams{

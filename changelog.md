@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.0 (2024-10-08)
+
+- update bot lib version to v1.8.3
+- add option `paginator.WithoutEmptyButtons`
+- BREAKING: change signature of `dialog.New()`, `paginator.New()`, `progress.New()`, `slider.New()` method. Add `bot.Bot` as first argument
+
 ## v0.3.2 (2024-05-20)
 
 - added 'NoDeleteAfterSelect' and 'NoDeleteAfterCancel' datepicker & slider options methods (#8) 

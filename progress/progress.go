@@ -28,7 +28,7 @@ type Progress struct {
 	canceled          bool
 }
 
-func New(opts ...Option) *Progress {
+func New(b *bot.Bot, opts ...Option) *Progress {
 	p := &Progress{
 		prefix:         bot.RandomString(16),
 		value:          0,
@@ -38,6 +38,11 @@ func New(opts ...Option) *Progress {
 
 	for _, opt := range opts {
 		opt(p)
+	}
+
+	if p.onCancel != nil {
+		p.onCancelHandlerId = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, p.prefix,
+			bot.MatchTypeExact, p.onCancelCall)
 	}
 
 	return p
@@ -63,11 +68,6 @@ func (p *Progress) Show(ctx context.Context, b *bot.Bot, chatID any) error {
 
 	if err != nil {
 		return err
-	}
-
-	if p.onCancel != nil {
-		p.onCancelHandlerId = b.RegisterHandler(bot.HandlerTypeCallbackQueryData, p.prefix,
-			bot.MatchTypeExact, p.onCancelCall)
 	}
 
 	p.message = m

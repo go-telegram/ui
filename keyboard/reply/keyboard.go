@@ -20,7 +20,7 @@ type ReplyKeyboard struct {
 	markup [][]models.KeyboardButton
 }
 
-func New(b *bot.Bot, opts ...Option) *ReplyKeyboard {
+func New(opts ...Option) *ReplyKeyboard {
 	kb := &ReplyKeyboard{
 		inputFieldPlaceholder: "",
 		selective:             false,
