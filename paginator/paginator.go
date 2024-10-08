@@ -18,14 +18,15 @@ const (
 )
 
 type Paginator struct {
-	data        []string
-	perPage     int
-	currentPage int
-	pagesCount  int
-	separator   string
-	prefix      string
-	closeButton string
-	onError     OnErrorHandler
+	data                []string
+	perPage             int
+	currentPage         int
+	pagesCount          int
+	separator           string
+	prefix              string
+	closeButton         string
+	onError             OnErrorHandler
+	withoutEmptyButtons bool
 
 	callbackHandlerID string
 }
