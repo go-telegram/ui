@@ -96,7 +96,7 @@ See in [options.go](options.go) file
 
 ## ShowOptions
 
-You can use `ShowOptions` to customize the appearance of the slider.
+You can use `ShowOptions` to customize the appearance of the paginator.
 
 For example:
 ```go
