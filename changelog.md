@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.1 (2024-10-25)
+
+- add ShowOptions for paginator and slider
+
 ## v0.4.0 (2024-10-08)
 
 - update bot lib version to v1.8.3
