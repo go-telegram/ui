@@ -71,7 +71,7 @@ func defaultOnError(err error) {
 	log.Printf("[TG-UI-SLIDER] [ERROR] %s", err)
 }
 
-func (s *Slider) Show(ctx context.Context, b *bot.Bot, chatID any) (*models.Message, error) {
+func (s *Slider) Show(ctx context.Context, b *bot.Bot, chatID any, opts ...ShowOption) (*models.Message, error) {
 	slide := s.slides[s.current]
 
 	sendParams := &bot.SendPhotoParams{
@@ -87,6 +87,10 @@ func (s *Slider) Show(ctx context.Context, b *bot.Bot, chatID any) (*models.Mess
 			Filename: "image.png",
 			Data:     strings.NewReader(slide.Photo),
 		}
+	}
+
+	for _, o := range opts {
+		o(sendParams)
 	}
 
 	return b.SendPhoto(ctx, sendParams)

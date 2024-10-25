@@ -111,3 +111,16 @@ slide := &slider.Slide{
 ## Options
 
 See in [options.go](options.go) file 
+
+## ShowOptions
+
+You can use `ShowOptions` to customize the appearance of the slider.
+
+For example:
+```go
+sl := slider.New(slides)
+
+sl.Show(ctx, b, strconv.Itoa(update.Message.Chat.ID), ShowWithThreadID(42))
+```
+
+See in [show_options.go](show_options.go) file 

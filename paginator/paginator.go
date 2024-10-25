@@ -64,11 +64,17 @@ func defaultOnError(err error) {
 	log.Printf("[TG-UI-PAGINATOR] [ERROR] %s", err)
 }
 
-func (p *Paginator) Show(ctx context.Context, b *bot.Bot, chatID any) (*models.Message, error) {
-	return b.SendMessage(ctx, &bot.SendMessageParams{
+func (p *Paginator) Show(ctx context.Context, b *bot.Bot, chatID any, opts ...ShowOption) (*models.Message, error) {
+	params := &bot.SendMessageParams{
 		ChatID:      chatID,
 		Text:        p.buildText(),
 		ParseMode:   models.ParseModeMarkdown,
 		ReplyMarkup: p.buildKeyboard(),
-	})
+	}
+
+	for _, o := range opts {
+		o(params)
+	}
+
+	return b.SendMessage(ctx, params)
 }

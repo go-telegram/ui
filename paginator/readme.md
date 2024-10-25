@@ -93,3 +93,16 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 ## Options
 
 See in [options.go](options.go) file 
+
+## ShowOptions
+
+You can use `ShowOptions` to customize the appearance of the slider.
+
+For example:
+```go
+p := paginator.New(data)
+
+p.Show(ctx, b, strconv.Itoa(update.Message.Chat.ID), ShowWithThreadID(42))
+```
+
+See in [show_options.go](show_options.go) file 
