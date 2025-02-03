@@ -28,7 +28,7 @@ type Paginator struct {
 	onError             OnErrorHandler
 	withoutEmptyButtons bool
 
-	CallbackHandlerID string
+	callbackHandlerID string
 }
 
 func New(b *bot.Bot, data []string, opts ...Option) *Paginator {
@@ -62,6 +62,10 @@ func (p *Paginator) Prefix() string {
 
 func defaultOnError(err error) {
 	log.Printf("[TG-UI-PAGINATOR] [ERROR] %s", err)
+}
+
+func (p *Paginator) GetCallbackHandlerID() string {
+	return p.callbackHandlerID
 }
 
 func (p *Paginator) Show(ctx context.Context, b *bot.Bot, chatID any, opts ...ShowOption) (*models.Message, error) {
