@@ -28,7 +28,7 @@ type Paginator struct {
 	onError             OnErrorHandler
 	withoutEmptyButtons bool
 
-	callbackHandlerID string
+	CallbackHandlerID string
 }
 
 func New(b *bot.Bot, data []string, opts ...Option) *Paginator {
