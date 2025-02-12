@@ -19,7 +19,6 @@ var demoReplyKeyboard *reply.ReplyKeyboard
 
 func initReplyKeyboard(b *bot.Bot) {
 	demoReplyKeyboard = reply.New(
-		b,
 		reply.WithPrefix("reply_keyboard"),
 		reply.IsSelective(),
 		reply.IsOneTimeKeyboard(),
