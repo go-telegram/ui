@@ -17,7 +17,9 @@ func (kb *ReplyKeyboard) Button(text string, b *bot.Bot, matchType bot.MatchType
 		Text: text,
 	})
 
-	b.RegisterHandler(bot.HandlerTypeMessageText, text, matchType, handler)
+	if handler != nil {
+		b.RegisterHandler(bot.HandlerTypeMessageText, text, matchType, handler)
+	}
 
 	return kb
 }
