@@ -1,2 +1,4 @@
 github.com/go-telegram/bot v1.8.3 h1:qywnDX+dKAzelJqij8eqlsUbw8SaCAE86GA6bMqGxCM=
 github.com/go-telegram/bot v1.8.3/go.mod h1:i2TRs7fXWIeaceF3z7KzsMt/he0TwkVC680mvdTFYeM=
+github.com/go-telegram/bot v1.14.0 h1:qknBErnf5O1CTWZDdDK/qqV8f7wWTf98gFIVW42m6dk=
+github.com/go-telegram/bot v1.14.0/go.mod h1:i2TRs7fXWIeaceF3z7KzsMt/he0TwkVC680mvdTFYeM=
