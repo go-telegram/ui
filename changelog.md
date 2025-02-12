@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.5.0 (2025-02-12)
+
+- update bot lib version to latest 
+- optional callback handler (#12) 
+- Update GetCallbackHandlerID to paginator (#18)
+- Change readme, to match new API (#19)
+
 ## v0.4.1 (2024-10-25)
 
 - add ShowOptions for paginator and slider
