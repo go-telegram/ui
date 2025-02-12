@@ -64,6 +64,10 @@ func defaultOnError(err error) {
 	log.Printf("[TG-UI-PAGINATOR] [ERROR] %s", err)
 }
 
+func (p *Paginator) GetCallbackHandlerID() string {
+	return p.callbackHandlerID
+}
+
 func (p *Paginator) Show(ctx context.Context, b *bot.Bot, chatID any, opts ...ShowOption) (*models.Message, error) {
 	params := &bot.SendMessageParams{
 		ChatID:      chatID,
