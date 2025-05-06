@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"net/url"
 
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -11,6 +12,8 @@ import (
 var demoInlineKeyboard *inline.Keyboard
 
 func initInlineKeyboard(b *bot.Bot) {
+	u, _ := url.Parse("https://example.com")
+
 	demoInlineKeyboard = inline.New(b, inline.WithPrefix("inline")).
 		Row().
 		Button("Row 1, Btn 1", []byte("1-1"), onInlineKeyboardSelect).
@@ -25,7 +28,9 @@ func initInlineKeyboard(b *bot.Bot) {
 		Button("Row 3, Btn 3", []byte("3-3"), onInlineKeyboardSelect).
 		Button("Row 3, Btn 4", []byte("3-4"), onInlineKeyboardSelect).
 		Row().
-		Button("Cancel", []byte("cancel"), onInlineKeyboardSelect)
+		Button("Cancel", []byte("cancel"), onInlineKeyboardSelect).
+		Row().
+		ButtonURL("link", *u)
 }
 
 func handlerInlineKeyboard(ctx context.Context, b *bot.Bot, update *models.Update) {

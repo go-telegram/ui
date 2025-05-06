@@ -1,6 +1,7 @@
 package inline
 
 import (
+	"net/url"
 	"strconv"
 
 	"github.com/go-telegram/bot/models"
@@ -22,6 +23,15 @@ func (kb *Keyboard) Button(text string, data []byte, handler OnSelect) *Keyboard
 	kb.markup[len(kb.markup)-1] = append(kb.markup[len(kb.markup)-1], models.InlineKeyboardButton{
 		Text:         text,
 		CallbackData: kb.prefix + strconv.Itoa(len(kb.handlers)-1),
+	})
+
+	return kb
+}
+
+func (kb *Keyboard) ButtonURL(text string, u url.URL) *Keyboard {
+	kb.markup[len(kb.markup)-1] = append(kb.markup[len(kb.markup)-1], models.InlineKeyboardButton{
+		Text: text,
+		URL:  u.String(),
 	})
 
 	return kb
