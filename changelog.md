@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.1 (2025-05-06)
+
+- add ButtonURL() for inline keyboard buttons (#20)
+
 ## v0.5.0 (2025-02-12)
 
 - update bot lib version to latest 
