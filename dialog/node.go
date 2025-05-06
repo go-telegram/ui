@@ -1,13 +1,17 @@
 package dialog
 
 import (
+	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
 )
 
 type Button struct {
-	Text   string
-	NodeID string
-	URL    string
+	ID              string
+	Text            string
+	NodeID          string
+	URL             string
+	CallbackHandler bot.HandlerFunc
+	CallbackData    string
 }
 
 type Node struct {
@@ -16,7 +20,7 @@ type Node struct {
 	Keyboard [][]Button
 }
 
-func (n Node) buildKB(prefix string) models.ReplyMarkup {
+func (n Node) buildKB(prefix, nodePrefix, callbackPrefix string) models.ReplyMarkup {
 	if len(n.Keyboard) == 0 {
 		return nil
 	}
@@ -29,10 +33,14 @@ func (n Node) buildKB(prefix string) models.ReplyMarkup {
 			b := models.InlineKeyboardButton{
 				Text: btn.Text,
 			}
-			if btn.URL != "" {
+			switch {
+			case btn.URL != "":
 				b.URL = btn.URL
-			} else {
-				b.CallbackData = prefix + btn.NodeID
+			case btn.CallbackHandler != nil:
+				b.CallbackData = prefix + callbackPrefix + btn.ID
+			default:
+				b.CallbackData = prefix + nodePrefix + btn.NodeID
+
 			}
 			kbRow = append(kbRow, b)
 		}
