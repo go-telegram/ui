@@ -9,6 +9,7 @@ package main
 
 import (
 	"context"
+	"net/url"
 	"os"
 	"os/signal"
 
@@ -27,12 +28,14 @@ func main() {
 		bot.WithDefaultHandler(defaultHandler),
 	}
 
-	b := bot.New(telegramBotToken, opts...)
+	b, _ := bot.New(telegramBotToken, opts...)
 
 	b.Start(ctx)
 }
 
 func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
+	u := url.URL{Scheme: "https", Host: "example.com", Path: "/path"}
+
 	kb := inline.New(b).
 		Row().
 		Button("Row 1, Btn 1", []byte("1-1"), onInlineKeyboardSelect).
@@ -46,6 +49,8 @@ func defaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		Button("Row 3, Btn 2", []byte("3-2"), onInlineKeyboardSelect).
 		Button("Row 3, Btn 3", []byte("3-3"), onInlineKeyboardSelect).
 		Button("Row 3, Btn 4", []byte("3-4"), onInlineKeyboardSelect).
+		Row().
+		ButtonURL("Link", u).
 		Row().
 		Button("Cancel", []byte("cancel"), onInlineKeyboardSelect)
 
@@ -62,6 +67,7 @@ func onInlineKeyboardSelect(ctx context.Context, b *bot.Bot, mes models.MaybeIna
 		Text:   "You selected: " + string(data),
 	})
 }
+
 ```
 
 ## Options

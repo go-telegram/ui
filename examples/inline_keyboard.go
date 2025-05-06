@@ -12,7 +12,7 @@ import (
 var demoInlineKeyboard *inline.Keyboard
 
 func initInlineKeyboard(b *bot.Bot) {
-	u, _ := url.Parse("https://example.com")
+	u := url.URL{Scheme: "https", Host: "example.com", Path: "/path"}
 
 	demoInlineKeyboard = inline.New(b, inline.WithPrefix("inline")).
 		Row().
@@ -28,9 +28,9 @@ func initInlineKeyboard(b *bot.Bot) {
 		Button("Row 3, Btn 3", []byte("3-3"), onInlineKeyboardSelect).
 		Button("Row 3, Btn 4", []byte("3-4"), onInlineKeyboardSelect).
 		Row().
-		Button("Cancel", []byte("cancel"), onInlineKeyboardSelect).
+		ButtonURL("link", u).
 		Row().
-		ButtonURL("link", *u)
+		Button("Cancel", []byte("cancel"), onInlineKeyboardSelect)
 }
 
 func handlerInlineKeyboard(ctx context.Context, b *bot.Bot, update *models.Update) {
